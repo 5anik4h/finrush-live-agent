@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 45" width="180" height="45">
+  <text
+    x="0"
+    y="35"
+    font-family="'Plus Jakarta Sans', 'Inter', sans-serif"
+    font-size="40"
+    font-weight="900"
+    letter-spacing="-2"
+  >
+    <tspan fill="#F0F5F1">Fin</tspan><tspan fill="#C8FF00">rush</tspan>
+  </text>
+</svg>

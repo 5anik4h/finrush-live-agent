@@ -1,0 +1,361 @@
+/* ══════════════════════════════════════════════════════════════════════════════
+   FINRUSH THEME - Complete Design Token System
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ┌─────────────────────────────────────────────────────────────────────────────┐
+     PRIMARY COLOR GROUPS (5 main + neutrals)
+     └─────────────────────────────────────────────────────────────────────────────┘ */
+
+  /* ══ GREEN GROUP (Backgrounds & Structure) ══ */
+  --color-green: oklch(0.2 0.02 145);
+  --color-green-light: oklch(0.3 0.02 145);
+  --color-green-dark: oklch(0.1 0.02 145);
+  --color-green-hover: oklch(0.25 0.02 145);
+  --color-green-text-bg: oklch(0.15 0.02 145);
+  --color-green-deepest: oklch(0.08 0.02 145);
+
+  /* ══ LIME GROUP (Primary CTA, Income) ══ */
+  --color-lime: oklch(0.85 0.23 123);
+  --color-lime-light: oklch(0.95 0.23 123);
+  --color-lime-mid: oklch(0.8 0.23 123);
+  --color-lime-dark: oklch(0.7 0.23 123);
+  --color-lime-dim: oklch(0.65 0.23 123);
+  --color-lime-bright: oklch(0.9 0.23 123);
+
+  /* ══ PURPLE GROUP (Investment, Secondary) ══ */
+  --color-purple: oklch(0.75 0.18 300);
+  --color-purple-light: oklch(0.85 0.18 300);
+  --color-purple-mid: oklch(0.7 0.18 300);
+  --color-purple-dark: oklch(0.55 0.18 300);
+  --color-purple-dim: oklch(0.6 0.18 300);
+
+  /* ══ AMBER GROUP (Warnings, Savings + Errors) ══ */
+  --color-amber: oklch(0.75 0.18 70);
+  --color-amber-light: oklch(0.85 0.18 70);
+  --color-amber-mid: oklch(0.7 0.18 70);
+  --color-amber-dark: oklch(0.55 0.18 70);
+  --color-amber-dim: oklch(0.6 0.18 70);
+
+  /* ══ RED GROUP (Error states, destructive actions) ══ */
+  --color-red: oklch(0.5 0.25 15);
+  --color-red-bright: oklch(0.6 0.25 15);
+  --color-red-dark: oklch(0.4 0.25 15);
+  --color-red-hover: oklch(0.55 0.25 15);
+
+  /* ══ ORANGE ALIAS (Maps to Amber for consistency) ══ */
+  --color-orange: var(--color-amber);
+  --color-orange-light: var(--color-amber-light);
+
+  /* ══ NEUTRALS & TEXT ══ */
+  --color-text: oklch(0.95 0.01 140);
+  --color-text-muted: oklch(0.65 0.01 140);
+  --color-text-dim: rgba(160, 160, 160, var(--opacity-8x));
+  --color-text-disabled: rgba(255, 255, 255, var(--opacity-4x));
+  --color-black: oklch(0 0 0);
+  --color-white: oklch(1 0 0);
+  --color-transparent: rgba(0, 0, 0, 0);
+
+  /* ┌─────────────────────────────────────────────────────────────────────────────┐
+     SEMANTIC ALIASES & COMPOSITE COLORS
+     └─────────────────────────────────────────────────────────────────────────────┘ */
+
+  /* Semantic flows: map business concepts to palette colors */
+  --color-income: var(--color-lime);
+  --color-expense: var(--color-amber);
+  --color-investment: var(--color-purple);
+  --color-savings: var(--color-amber);
+
+  /* Surface colors (derived from green group for consistency) */
+  --color-surface-page: var(--color-green);
+  --color-surface-card: var(--color-green-light);
+  --color-surface-hover: var(--color-green-hover);
+  --color-surface-input: var(--color-green-text-bg);
+  --color-surface-border: var(--color-glass);
+  --color-surface-overlay: var(--color-green);
+
+  /* Glass effect layers (white + opacity for frosted glass) */
+  --color-glass: rgba(255, 255, 255, var(--opacity-low));
+  /* Subtle background */
+  --color-glass-hover: rgba(255, 255, 255, var(--opacity-2x));
+  /* Hover states, glass strong */
+  --color-glass-accent: rgba(200, 255, 0, var(--opacity-4x));
+  /* Lime accent in glass */
+
+  /* Utility opacity levels (for quick reference) — deprecated, use --opacity-* scale above */
+  --opacity-bg-dim: rgba(255, 255, 255, var(--opacity-low));
+  --opacity-border-light: rgba(255, 255, 255, var(--opacity-2x));
+  --opacity-tooltip: rgba(10, 10, 10, 0.9);
+
+  /* Badge colors (derived from palette primaries + glass) */
+  --color-badge-lime-bg: rgba(200, 255, 0, var(--opacity-low));
+  --color-badge-lime-border: rgba(200, 255, 0, var(--opacity-2x));
+  --color-badge-amber-bg: rgba(255, 170, 51, var(--opacity-low));
+  --color-badge-amber-border: rgba(255, 170, 51, var(--opacity-2x));
+  --color-badge-error-bg: rgba(255, 60, 0, var(--opacity-low));
+  --color-badge-error-border: rgba(255, 60, 0, var(--opacity-2x));
+  --color-badge-purple-bg: rgba(179, 136, 255, var(--opacity-low));
+  --color-badge-purple-border: rgba(179, 136, 255, var(--opacity-2x));
+
+  /* Voice badge states (mapped to semantic colors) */
+  --voice-badge-recording-bg: var(--color-badge-lime-bg);
+  --voice-badge-recording-border: var(--color-badge-lime-border);
+  --voice-badge-connecting-bg: var(--color-badge-amber-bg);
+  --voice-badge-connecting-border: var(--color-badge-amber-border);
+  --voice-badge-error-bg: var(--color-badge-error-bg);
+  --voice-badge-error-border: var(--color-badge-error-border);
+
+  /* WebSocket & connection error states */
+  --voice-ws-error-bg: rgba(255, 60, 0, var(--opacity-low));
+  --voice-ws-error-border: rgba(255, 60, 0, var(--opacity-2x));
+  --voice-ws-error-text: rgba(255, 60, 0, var(--opacity-8x));
+  --voice-mic-denied-bg: rgba(255, 60, 0, var(--opacity-low));
+  --voice-mic-denied-border: rgba(255, 60, 0, var(--opacity-2x));
+
+  /* Button background for voice bar */
+  --voice-bar-btn-bg: var(--glass-bg);
+
+  /* Category badge in chat */
+  --badge-category-bg: var(--color-badge-purple-bg);
+  --badge-category-border: var(--color-badge-purple-border);
+
+  /* Alert/Warning states */
+  --color-alert-warning-bg: rgba(255, 170, 51, var(--opacity-low));
+  --color-alert-warning-border: rgba(255, 170, 51, var(--opacity-2x));
+  --color-alert-warning-text: var(--color-savings);
+
+  /* Dropdown background */
+  --color-dropdown-bg: var(--color-surface-card);
+
+  /* Chart colors (extended palette for data visualization, derived from primaries) */
+  --color-chart-1: var(--color-lime);
+  /* Bright lime - Income */
+  --color-chart-2: var(--color-purple);
+  /* Purple - Investment */
+  --color-chart-3: var(--color-amber);
+  /* Amber - Savings */
+  --color-chart-4: oklch(0.854 0.132 210.368);
+  /* Sky blue - Additional variety */
+  --color-chart-5: oklch(0.645 0.246 16.439);
+  /* Warm rose - Additional variety */
+  --color-chart-6: var(--color-lime-dark);
+  /* Dim lime - Tertiary income */
+  --color-chart-7: var(--color-purple-dark);
+  /* Dim purple - Secondary investment */
+  --color-chart-8: var(--color-amber-dark);
+  /* Darker amber - Secondary savings/expenses */
+
+  /* ┌─────────────────────────────────────────────────────────────────────────────┐
+     TYPOGRAPHY & LAYOUT
+     └─────────────────────────────────────────────────────────────────────────────┘ */
+
+  --font-sans: "Plus Jakarta Sans", sans-serif;
+  --font-serif: "Lora", serif;
+  --font-mono: "IBM Plex Mono", monospace;
+  --radius: 0.5rem;
+  --spacing: 0.27rem;
+  --tracking-normal: -0.025em;
+
+  /* ┌─────────────────────────────────────────────────────────────────────────────┐
+     SHADOWS (Dark theme: higher opacity, more blur)
+     └─────────────────────────────────────────────────────────────────────────────┘ */
+
+  --shadow-color: #000000;
+  --shadow-opacity: 0.35;
+  --shadow-2xs: 0px 2px 12px 0px hsl(0 0% 0% / 0.17);
+  --shadow-xs: 0px 2px 12px 0px hsl(0 0% 0% / 0.17);
+  --shadow-sm: 0px 2px 12px 0px hsl(0 0% 0% / 0.35), 0px 1px 2px -1px hsl(0 0% 0% / 0.35);
+  --shadow: 0px 2px 12px 0px hsl(0 0% 0% / 0.35), 0px 1px 2px -1px hsl(0 0% 0% / 0.35);
+  --shadow-md: 0px 2px 12px 0px hsl(0 0% 0% / 0.35), 0px 2px 4px -1px hsl(0 0% 0% / 0.35);
+  --shadow-lg: 0px 2px 12px 0px hsl(0 0% 0% / 0.35), 0px 4px 6px -1px hsl(0 0% 0% / 0.35);
+  --shadow-xl: 0px 2px 12px 0px hsl(0 0% 0% / 0.35), 0px 8px 10px -1px hsl(0 0% 0% / 0.35);
+  --shadow-2xl: 0px 2px 12px 0px hsl(0 0% 0% / 0.88);
+
+  /* ┌─────────────────────────────────────────────────────────────────────────────┐
+     SHADCN/UI COMPATIBILITY
+     └─────────────────────────────────────────────────────────────────────────────┘ */
+
+  --background: var(--color-green);
+  --foreground: var(--color-text);
+  --card: var(--color-surface-card);
+  --card-foreground: var(--foreground);
+  --popover: var(--color-black);
+  --popover-foreground: var(--foreground);
+  --primary: var(--color-lime);
+  --primary-foreground: var(--color-black);
+  --secondary: var(--color-green-dark);
+  --secondary-foreground: var(--foreground);
+  --muted: var(--color-black);
+  --muted-foreground: var(--color-text-muted);
+  --accent: var(--color-purple);
+  --accent-foreground: var(--color-black);
+  --destructive: var(--color-amber);
+  --destructive-foreground: var(--color-black);
+  --border: var(--color-surface-border);
+  --input: var(--color-green-text-bg);
+  --ring: var(--color-lime);
+
+  /* ──── Charts ──── */
+  --chart-1: var(--color-chart-1);
+  --chart-2: var(--color-chart-2);
+  --chart-3: var(--color-chart-3);
+  --chart-4: var(--color-chart-4);
+  --chart-5: var(--color-chart-5);
+  --chart-6: var(--color-chart-6);
+  --chart-7: var(--color-chart-7);
+  --chart-8: var(--color-chart-8);
+
+  /* ──── Sidebar (shadcn/ui) ──── */
+  --sidebar: var(--color-black);
+  --sidebar-foreground: var(--foreground);
+  --sidebar-primary: var(--color-lime);
+  --sidebar-primary-foreground: var(--color-black);
+  --sidebar-accent: var(--color-green-dark);
+  --sidebar-accent-foreground: var(--foreground);
+  --sidebar-border: var(--border);
+  --sidebar-ring: var(--color-lime);
+
+  /* ┌─────────────────────────────────────────────────────────────────────────────┐
+     GLASS & DIALOG
+     └─────────────────────────────────────────────────────────────────────────────┘ */
+
+  --glass-bg: var(--color-glass);
+  --glass-bg-hover: var(--color-glass);
+  --glass-bg-strong: var(--color-glass);
+  --glass-border: var(--color-glass);
+  --glass-border-accent: var(--color-glass-accent);
+  --glass-blur: 20px;
+  --dialog-bg: var(--color-surface-overlay);
+  --dialog-blur: 32px;
+  --dropdown-bg: var(--color-dropdown-bg);
+
+  /* ┌─────────────────────────────────────────────────────────────────────────────┐
+     GRADIENTS
+     └─────────────────────────────────────────────────────────────────────────────┘ */
+
+  --gradient-btn-primary: linear-gradient(135deg, var(--color-lime-mid) 0%, var(--color-lime) 100%);
+
+  /* ──── Voice View Gradients & Effects ──── */
+  --voice-btn-idle-gradient: linear-gradient(135deg, var(--color-lime-dim) 0%, var(--color-lime-mid) 50%, var(--color-lime) 100%);
+  --voice-btn-recording-gradient: linear-gradient(135deg, var(--color-lime-mid) 0%, var(--color-lime) 50%, var(--color-lime-bright) 100%);
+  --voice-btn-connecting-gradient: linear-gradient(135deg, var(--color-orange) 0%, var(--color-orange-light) 50%, var(--color-amber-light) 100%);
+  --voice-btn-error-gradient: linear-gradient(135deg, var(--color-red-dark) 0%, oklch(0.38 0.22 24) 50%, var(--color-red-bright) 100%);
+
+  --voice-btn-idle-shadow: 0 0 24px rgba(200, 255, 0, var(--opacity-2x)), 0 4px 20px rgba(0, 0, 0, var(--opacity-4x)), inset 0 1px 0 rgba(255, 255, 255, var(--opacity-2x));
+  --voice-btn-recording-shadow: 0 0 32px rgba(200, 255, 0, 0.45), 0 0 12px rgba(139, 195, 74, var(--opacity-4x)), inset 0 1px 0 rgba(255, 255, 255, var(--opacity-2x));
+  --voice-btn-connecting-shadow: 0 0 28px rgba(255, 170, 51, var(--opacity-8x)), 0 4px 20px rgba(0, 0, 0, var(--opacity-4x)), inset 0 1px 0 rgba(255, 255, 255, var(--opacity-2x));
+  --voice-btn-error-shadow: 0 0 28px rgba(255, 60, 0, var(--opacity-8x)), 0 4px 20px rgba(0, 0, 0, var(--opacity-4x)), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+
+  --voice-btn-idle-border: 1.5px solid rgba(200, 255, 0, var(--opacity-4x));
+  --voice-btn-recording-border: 1.5px solid rgba(200, 255, 0, var(--opacity-8x));
+  --voice-btn-connecting-border: 1.5px solid rgba(255, 170, 51, var(--opacity-8x));
+  --voice-btn-error-border: 1.5px solid rgba(255, 80, 40, var(--opacity-8x));
+
+  --voice-arc-track: rgba(200, 255, 0, var(--opacity-2x));
+  --voice-arc-active: var(--color-lime);
+  --voice-arc-warning: var(--color-red-bright);
+  --voice-pulse-outer: rgba(200, 255, 0, var(--opacity-8x));
+  --voice-pulse-inner: rgba(200, 255, 0, var(--opacity-4x));
+
+  --voice-glow: radial-gradient(ellipse 80% 50% at 50% 35%, rgba(140, 195, 74, var(--opacity-low)), transparent),
+    radial-gradient(ellipse 60% 40% at 50% 85%, rgba(140, 195, 74, var(--opacity-low)), transparent);
+
+  --voice-msg-user-bg: rgba(200, 255, 0, var(--opacity-low));
+  --voice-msg-user-border: rgba(200, 255, 0, var(--opacity-2x));
+
+  /* ┌─────────────────────────────────────────────────────────────────────────────┐
+     TYPOGRAPHY SCALE
+     └─────────────────────────────────────────────────────────────────────────────┘ */
+
+  --text-hero: 28px;
+  --text-amount-lg: 16px;
+  --text-amount-sm: 12px;
+  --text-title: 16px;
+  --text-subtitle: 12px;
+  --text-label: 10px;
+  --text-table-data: 12px;
+  --text-table-secondary: 12px;
+  --text-badge: 10px;
+  --text-caption: 12px;
+  --text-header-title: 16px;
+  --text-header-subtitle: 12px;
+  --text-small: 10px;
+  --text-responsive: clamp(14px, 3.5vw, 20px);
+
+  /* ──── Font Weights ──── */
+  --weight-hero: 600;
+  --weight-title: 500;
+  --weight-label: 500;
+  --weight-data: 500;
+  --weight-bold: 700;
+  --weight-semibold: 600;
+  --weight-regular: 500;
+
+  /* ┌─────────────────────────────────────────────────────────────────────────────┐
+     OPACITY SCALE
+     └─────────────────────────────────────────────────────────────────────────────┘ */
+
+  --opacity-tiny: 0.03;
+  --opacity-low: 0.05;
+  --opacity-2x: 0.2;
+  --opacity-3x: 0.12;
+  --opacity-4x: 0.4;
+  --opacity-6x: 0.6;
+  --opacity-8x: 0.8;
+  --opacity-full: 0.95;
+
+  /* ┌─────────────────────────────────────────────────────────────────────────────┐
+     SPACING
+     └─────────────────────────────────────────────────────────────────────────────┘ */
+
+  --space-card-x: 1rem;
+  --space-card-y: 1rem;
+  --space-section-gap: 1rem;
+  --space-card-gap: 0.75rem;
+
+  /* ─── Tab Navigation ─── */
+  --tab-nav-bg-mobile: var(--color-green);
+  --tab-nav-bg-desktop: var(--color-green);
+
+  /* ┌─────────────────────────────────────────────────────────────────────────────┐
+     UI COMPONENT VARIANTS
+     └─────────────────────────────────────────────────────────────────────────────┘ */
+
+  /* ──── Dropdown & Menu Items ──── */
+  --dropdown-item-focus-bg: rgba(255, 255, 255, var(--opacity-3x));
+  --dropdown-content-bg: var(--color-surface-overlay);
+  --dropdown-content-border: var(--glass-border);
+
+  /* ──── Input & Form States ──── */
+  --input-glass-bg: rgba(255, 255, 255, var(--opacity-tiny));
+  --input-glass-border: rgba(255, 255, 255, var(--opacity-3x));
+  --input-glass-text: rgba(240, 245, 241, var(--opacity-6x));
+
+  /* ──── Buttons - Hover & Focus ──── */
+  --button-hover-bg-subtle: rgba(255, 255, 255, var(--opacity-low));
+  --button-hover-bg: rgba(255, 255, 255, var(--opacity-3x));
+  --button-focus-ring: var(--color-lime);
+
+  /* ──── Progress Bars & Fills ──── */
+  --progress-bar-bg: rgba(255, 255, 255, var(--opacity-3x));
+  --progress-bar-fill: var(--color-lime);
+  --progress-gradient-income: linear-gradient(90deg, var(--color-income) 0%, #8BC34A 100%);
+  --progress-gradient-mixed: linear-gradient(90deg, var(--color-income) 0%, var(--color-savings) 100%);
+  --progress-gradient-warning: linear-gradient(90deg, #FFCC66, var(--color-savings));
+
+  /* ──── Subtle backgrounds for highlights ──── */
+  --color-lime-subtle-bg: rgba(200, 255, 0, var(--opacity-low));
+  --color-amber-subtle-bg: rgba(255, 170, 51, var(--opacity-low));
+  --color-amber-hover-bg: rgba(255, 170, 51, var(--opacity-low));
+  --color-red-subtle-bg: rgba(255, 60, 0, var(--opacity-low));
+  --color-purple-subtle-bg: rgba(179, 136, 255, var(--opacity-low));
+
+  /* ──── Text colors for special cases ──── */
+  --color-purple-text: #B388FF;
+  --color-error-text: #FF5555;
+
+  /* ──── Borders with specific opacity ──── */
+  --border-subtle: 1px solid rgba(255, 255, 255, var(--opacity-tiny));
+  --border-light: 1px solid rgba(255, 255, 255, var(--opacity-2x));
+  --border-dashed-subtle: 1px dashed rgba(255, 255, 255, var(--opacity-3x));
+}

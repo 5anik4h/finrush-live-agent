@@ -1,0 +1,24 @@
+{
+  "name": "Finrush Agent",
+  "short_name": "Finrush",
+  "description": "Live AI Financial Assistant powered by Gemini",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#000000",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/logo/finrush_favicon_fr.svg",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo/finrush_favicon_fr.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
+}

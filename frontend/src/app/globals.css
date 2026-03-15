@@ -1,0 +1,22 @@
+/* ══════════════════════════════════════════════════════════════════════════════
+   FINRUSH GLOBAL STYLES - DEPRECATED REDIRECT
+
+   This file has been modularized into a professional structure in ../styles/
+
+   All styles are now imported from:
+   → frontend/src/styles/globals.css
+
+   For details on the refactoring:
+   → See REFACTOR_PLAN_CSS_MODULARIZATION.md
+
+   Structure:
+   styles/
+   ├── globals.css (entry point)
+   ├── theme/theme-finrush.css (design tokens)
+   ├── base/ (imports, reset, animations)
+   ├── variables/ (organized by category)
+   ├── utilities/ (organized by domain)
+   └── tailwind-theme.css (Tailwind v4 extension)
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+@import "../styles/globals.css";

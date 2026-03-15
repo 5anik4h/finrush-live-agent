@@ -1,0 +1,1149 @@
+@layer utilities {
+
+  /* Unified Header Structure (Title + Subtitle) */
+  .section-header-group {
+    display: block !important;
+    line-height: 1 !important;
+  }
+
+  .text-title-header {
+    font-size: var(--text-header-title) !important;
+    font-weight: var(--weight-semibold) !important;
+    color: var(--foreground) !important;
+    line-height: 1.2 !important;
+    letter-spacing: -0.025em !important;
+  }
+
+  .text-description-header {
+    font-size: var(--text-header-subtitle) !important;
+    color: var(--color-text-dim) !important;
+    font-weight: var(--weight-title) !important;
+    line-height: 1.5 !important;
+  }
+
+  /* ────── REUSABLE UI CLASSES ────── */
+  /* Glass input: standardized across all inputs */
+  .input-glass {
+    background: var(--input-glass-bg) !important;
+    border: 1px solid var(--input-glass-border) !important;
+    color: var(--foreground) !important;
+    caret-color: var(--button-focus-ring) !important;
+  }
+
+  .input-glass:focus,
+  .input-glass:focus-visible {
+    outline: none !important;
+    box-shadow: 0 0 0 1px var(--button-focus-ring) !important;
+    border-color: var(--button-focus-ring) !important;
+  }
+
+  /* Dropdown item focus state (NO color change) */
+  .dropdown-item-focus {
+    background: var(--color-transparent) !important;
+    color: inherit !important;
+    /* Preserves text color on hover */
+  }
+
+  .dropdown-item-focus:focus-visible {
+    background: var(--dropdown-item-focus-bg) !important;
+    outline: none !important;
+    color: inherit !important;
+  }
+
+  .dropdown-item-focus:hover {
+    background: var(--dropdown-item-focus-bg) !important;
+    color: inherit !important;
+    /* Critical: keeps text color consistent */
+  }
+
+  /* Button glass variant (for dialogs, pickers) */
+  .btn-glass-card {
+    background: var(--input-glass-bg) !important;
+    border: 1px solid var(--input-glass-border) !important;
+    color: var(--foreground) !important;
+    transition: all 0.2s ease !important;
+    cursor: pointer !important;
+  }
+
+  .btn-glass-card:hover {
+    background: var(--button-hover-bg-subtle) !important;
+    border-color: var(--color-lime) !important;
+  }
+
+  .btn-glass-card:active {
+    opacity: 0.8 !important;
+  }
+
+  /* Button hover - transparent variant */
+  .button-hover-transparent:hover:not(:disabled) {
+    background: var(--button-hover-bg-subtle) !important;
+    opacity: 0.9 !important;
+  }
+
+  .button-hover-transparent:active:not(:disabled) {
+    opacity: 0.75 !important;
+  }
+
+  /* Progress bar wrapper */
+  .progress-bar-wrapper {
+    background: var(--progress-bar-bg) !important;
+    border-radius: 9999px !important;
+    overflow: hidden !important;
+    height: 6px !important;
+  }
+
+  /* Progress bar fill with standard lime color */
+  .progress-bar-fill {
+    background: var(--progress-bar-fill) !important;
+    height: 100% !important;
+    border-radius: 9999px !important;
+  }
+
+  /* ────── ANIMATION CLASSES ────── */
+  /* Interactive hover animation (scale + opacity) */
+  .animate-hover-pill {
+    cursor: pointer !important;
+  }
+
+  .animate-hover-pill:hover:not(:disabled) {
+    transform: scale(1.02) !important;
+    opacity: 0.9 !important;
+  }
+
+  .animate-hover-pill:active:not(:disabled) {
+    transform: scale(0.98) !important;
+    opacity: 0.8 !important;
+  }
+
+  .animate-hover-pill:disabled {
+    opacity: 0.5 !important;
+    pointer-events: none !important;
+  }
+
+  /* Circular Buttons Override */
+  .btn-round {
+    border-radius: 9999px !important;
+  }
+
+  /* Section toggle animation */
+  .animate-section-toggle {
+    cursor: pointer !important;
+  }
+
+  .animate-section-toggle:hover:not(:disabled) {
+    background-color: var(--color-glass) !important;
+    opacity: 0.9 !important;
+  }
+
+  .animate-section-toggle:active:not(:disabled) {
+    transform: scale(0.98) !important;
+    opacity: 0.8 !important;
+  }
+
+  .animate-section-toggle:disabled {
+    opacity: 0.5 !important;
+    pointer-events: none !important;
+  }
+
+  /* ══════════════════════════════════════════════════════
+     B. TYPOGRAPHY CLASSES
+     ══════════════════════════════════════════════════════ */
+
+  /* Hero: patrimonio neto */
+  .type-hero {
+    font-size: var(--text-hero) !important;
+    font-weight: var(--weight-hero) !important;
+    letter-spacing: -0.03em !important;
+    line-height: 1.15 !important;
+    color: var(--foreground) !important;
+  }
+
+  /* Large KPI amounts */
+  .type-amount-lg {
+    font-size: var(--text-amount-lg) !important;
+    font-weight: var(--weight-title) !important;
+    letter-spacing: -0.02em !important;
+    line-height: 1 !important;
+  }
+
+  /* Small amounts, table values */
+  .type-amount-sm {
+    font-size: var(--text-amount-sm) !important;
+    font-weight: var(--weight-label) !important;
+    line-height: 1.2 !important;
+  }
+
+  /* Section/card titles (16px) */
+  .type-title {
+    font-size: var(--text-title) !important;
+    font-weight: var(--weight-title) !important;
+    color: var(--foreground) !important;
+    letter-spacing: -0.025em !important;
+    line-height: 1.25 !important;
+  }
+
+  /* Subtitles, descriptions */
+  .type-subtitle {
+    font-size: var(--text-subtitle) !important;
+    font-weight: var(--weight-data) !important;
+    color: var(--muted-foreground) !important;
+    line-height: 1.5 !important;
+  }
+
+  /* KPI labels, column headers */
+  .type-label {
+    font-size: var(--text-label) !important;
+    font-weight: var(--weight-label) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.07em !important;
+    color: var(--muted-foreground) !important;
+    opacity: var(--opacity-8x) !important;
+  }
+
+  /* Table primary data */
+  .type-table-data {
+    font-size: var(--text-table-data) !important;
+    font-weight: var(--weight-data) !important;
+    color: var(--foreground) !important;
+  }
+
+  /* Table secondary: dates, IDs */
+  .type-table-secondary {
+    font-size: var(--text-table-secondary) !important;
+    font-weight: var(--weight-regular) !important;
+    color: var(--muted-foreground) !important;
+  }
+
+  /* Badge chips */
+  .type-badge {
+    font-size: var(--text-badge) !important;
+    font-weight: var(--weight-label) !important;
+  }
+
+  /* Captions, empty states */
+  .type-caption {
+    font-size: var(--text-caption) !important;
+    font-weight: var(--weight-regular) !important;
+    color: var(--muted-foreground) !important;
+    opacity: var(--opacity-8x) !important;
+  }
+
+  /* ══════════════════════════════════════════════════════
+     C. GLASS / CARD CLASSES
+     ══════════════════════════════════════════════════════ */
+
+  /* ══════════════════════════════════════════════════════
+     CARD CLASSES (Unified border style)
+     All cards use --glass-border for consistency
+     ══════════════════════════════════════════════════════ */
+
+  /* ── Base glass card: foundation for all card components ── */
+  .glass-card {
+    background: var(--glass-bg) !important;
+    border: 1px solid var(--glass-border) !important;
+    backdrop-filter: blur(var(--glass-blur)) !important;
+    border-radius: var(--radius) !important;
+    box-shadow: 0px 2px 12px 0px var(--shadow-color) / var(--shadow-opacity) !important;
+  }
+
+  /* ── Hover state: subtle background/border change ── */
+  .glass-card:hover {
+    background: var(--glass-bg-hover) !important;
+  }
+
+  /* ── For table/chart cards with header separator ── */
+  .glass-card-sectioned {
+    background: var(--glass-bg) !important;
+    border: 1px solid var(--glass-border) !important;
+    backdrop-filter: blur(var(--glass-blur)) !important;
+    border-radius: var(--radius) !important;
+    overflow: hidden !important;
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  /* ── Header row inside glass-card-sectioned ── */
+  .glass-card-header {
+    border-bottom: 1px solid var(--glass-border) !important;
+    background: var(--color-transparent) !important;
+    padding: var(--space-card-y) var(--space-card-x) !important;
+  }
+
+  /* ── Content inside glass-card-sectioned ── */
+  .glass-card-content {
+    flex: 1 !important;
+    overflow-y: auto !important;
+  }
+
+  .glass-dialog {
+    background: var(--dialog-bg) !important;
+    backdrop-filter: blur(var(--dialog-blur)) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 0.75rem !important;
+  }
+
+  .glass-input {
+    background: var(--color-glass) !important;
+    border: 1px solid var(--glass-border) !important;
+    backdrop-filter: blur(12px) !important;
+    color: var(--foreground) !important;
+  }
+
+  /* ── Universal selection color ── */
+  ::selection {
+    background: var(--primary) / 0.3 !important;
+    color: inherit !important;
+  }
+
+  input::selection,
+  textarea::selection {
+    background: var(--primary) !important;
+    color: var(--color-green-deepest) !important;
+  }
+
+  /* ── Universal dialog input: always lime focus-ring ── */
+  .dialog-input {
+    background: var(--glass-bg) !important;
+    border: 1px solid var(--glass-border) !important;
+    color: var(--foreground) !important;
+    font-size: var(--text-caption) !important;
+    height: 2.25rem !important;
+    --tw-ring-color: var(--primary) !important;
+    caret-color: var(--primary) !important;
+  }
+
+  .dialog-input:focus,
+  .dialog-input:focus-visible,
+  .dialog-input:active {
+    outline: none !important;
+    box-shadow: 0 0 0 1px var(--primary) !important;
+    border-color: var(--primary) !important;
+    --tw-ring-offset-width: 0px !important;
+    --tw-ring-width: 1px !important;
+    --tw-ring-color: var(--primary) !important;
+  }
+
+  /* ── Date input: always lime selection, dark mode ── */
+  .dialog-input-date {
+    background: var(--glass-bg) !important;
+    border: 1px solid var(--glass-border) !important;
+    color: var(--foreground) !important;
+    font-size: var(--text-table-data) !important;
+    height: 2.25rem !important;
+    color-scheme: dark !important;
+    caret-color: var(--primary) !important;
+  }
+
+  .dialog-input-date:focus,
+  .dialog-input-date:focus-visible {
+    outline: none !important;
+    box-shadow: 0 0 0 1px var(--primary) !important;
+    border-color: var(--primary) !important;
+  }
+
+  /* Selection color for date segments (some browsers support this) */
+  .dialog-input-date::-webkit-datetime-edit-month-field:focus,
+  .dialog-input-date::-webkit-datetime-edit-day-field:focus,
+  .dialog-input-date::-webkit-datetime-edit-year-field:focus {
+    background: var(--primary) !important;
+    color: var(--color-green-deepest) !important;
+  }
+
+  /* ── Badge purple (recurrence/period labels) ── */
+  .badge-period {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.125rem 0.5rem;
+    border-radius: calc(var(--radius) - 2px);
+    font-size: var(--text-label);
+    font-weight: var(--weight-title);
+    background: var(--badge-category-bg);
+    border: 1px solid var(--badge-category-border);
+    color: var(--accent);
+    border: 1px solid var(--glass-border) !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    align-items: center !important;
+  }
+
+  .glass-dropdown {
+    background: var(--dropdown-bg) !important;
+    border: 1px solid var(--glass-border) !important;
+    color: var(--foreground) !important;
+  }
+
+  /* Alert status colors */
+  .alert-error {
+    border-color: hsl(35 100% 60% / 0.3) !important;
+    background-color: hsl(35 100% 60% / 0.06) !important;
+    color: var(--color-savings) !important;
+  }
+
+  .alert-warning {
+    border-color: var(--color-alert-warning-border) !important;
+    background-color: var(--color-alert-warning-bg) !important;
+    color: var(--color-alert-warning-text) !important;
+  }
+
+  /* Recharts Tooltip — background + border style */
+  .recharts-tooltip-bg {
+    background-color: var(--opacity-tooltip) !important;
+    border: 1px solid var(--glass-border) !important;
+    border-radius: 8px !important;
+    padding: 8px 12px !important;
+  }
+
+  /* ══════════════════════════════════════════════════════
+     D. KPI CARD CLASSES
+     ══════════════════════════════════════════════════════ */
+
+  /* KPI cards: alias to .glass-card with padding */
+  .kpi-card {
+    background: var(--glass-bg) !important;
+    border: 1px solid var(--glass-border) !important;
+    backdrop-filter: blur(var(--glass-blur)) !important;
+    border-radius: var(--radius) !important;
+    box-shadow: 0px 2px 12px 0px var(--shadow-color) / var(--shadow-opacity) !important;
+    padding: var(--space-card-y) var(--space-card-x) !important;
+  }
+
+  /* Legacy alias: card-foreground → use .glass-card instead */
+  .card-foreground {
+    background: var(--glass-bg) !important;
+    border: 1px solid var(--glass-border) !important;
+    backdrop-filter: blur(var(--glass-blur)) !important;
+    border-radius: var(--radius) !important;
+    box-shadow: 0px 2px 12px 0px var(--shadow-color) / var(--shadow-opacity) !important;
+  }
+
+  .kpi-label {
+    font-size: var(--text-subtitle) !important;
+    font-weight: var(--weight-label) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.07em !important;
+    color: var(--muted-foreground) !important;
+    opacity: var(--opacity-8x) !important;
+    margin-bottom: 0.5rem !important;
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.375rem !important;
+  }
+
+  .kpi-value {
+    font-size: var(--text-responsive) !important;
+    font-weight: var(--weight-title) !important;
+    letter-spacing: -0.02em !important;
+    line-height: 1 !important;
+    color: var(--foreground) !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  /* Responsive: used in 3-col KPI grids */
+  .kpi-value-responsive {
+    font-size: var(--text-responsive) !important;
+    font-weight: var(--weight-title) !important;
+    letter-spacing: -0.02em !important;
+    line-height: 1 !important;
+    color: var(--foreground) !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+  }
+
+  /* Hero: patrimonio neto card */
+  .kpi-value-hero {
+    font-size: var(--text-hero) !important;
+    font-weight: var(--weight-hero) !important;
+    letter-spacing: -0.03em !important;
+    line-height: 1.2 !important;
+    color: var(--foreground) !important;
+  }
+
+  .kpi-sub {
+    font-size: var(--text-header-subtitle) !important;
+    color: var(--muted-foreground) !important;
+    margin-top: 0.25rem !important;
+  }
+
+  /* ══════════════════════════════════════════════════════
+     E. BUTTON CLASSES
+     ══════════════════════════════════════════════════════ */
+
+  /* ────── BUTTON BASE STYLES ────── */
+  /* All buttons inherit unified transition */
+  button,
+  [role="button"],
+  .btn-primary,
+  .btn-glass,
+  .btn-icon,
+  .btn-ghost,
+  .tab-pill,
+  .tab-btn {
+    transition: opacity var(--duration-fast) var(--ease-out), transform var(--duration-fast) var(--ease-out), background var(--duration-fast) var(--ease-out), border-color var(--duration-fast) var(--ease-out), box-shadow var(--duration-fast) var(--ease-out) !important;
+  }
+
+  /* Primary CTA: lime gradient, dark text */
+  .btn-primary {
+    background: var(--gradient-btn-primary) !important;
+    color: var(--color-green-deepest) !important;
+    font-weight: var(--weight-title) !important;
+    font-size: var(--text-caption) !important;
+    border: none !important;
+    border-radius: var(--radius) !important;
+    height: 2.25rem !important;
+    padding: 0 1rem !important;
+    cursor: pointer !important;
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    opacity: 0.9 !important;
+    transform: scale(1.02) !important;
+  }
+
+  .btn-primary:active:not(:disabled) {
+    transform: scale(0.98) !important;
+    opacity: 0.85 !important;
+  }
+
+  .btn-primary:disabled {
+    opacity: 0.5 !important;
+    pointer-events: none !important;
+  }
+
+  /* Glass button: transparent with glass bg */
+  .btn-glass {
+    background: var(--color-transparent) !important;
+    border: 1px solid var(--color-glass) !important;
+    backdrop-filter: blur(12px) !important;
+    color: var(--muted-foreground) !important;
+    font-size: var(--text-table-data) !important;
+    border-radius: var(--radius) !important;
+    height: 2rem !important;
+    padding: 0 0.625rem !important;
+    cursor: pointer !important;
+  }
+
+  .btn-glass:hover:not(:disabled) {
+    background: var(--color-glass-hover) !important;
+    opacity: 0.9 !important;
+  }
+
+  .btn-glass:active:not(:disabled) {
+    opacity: 0.75 !important;
+  }
+
+  .btn-glass:disabled {
+    opacity: 0.5 !important;
+    pointer-events: none !important;
+  }
+
+  /* Small icon button: edit/delete in lists */
+  .btn-icon-sm {
+    background: var(--color-transparent) !important;
+    border: 1px solid var(--color-glass) !important;
+    backdrop-filter: blur(12px) !important;
+    width: 1.75rem !important;
+    height: 1.75rem !important;
+    border-radius: var(--radius) !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+  }
+
+  .btn-icon-sm:hover:not(:disabled) {
+    opacity: 0.8 !important;
+  }
+
+  .btn-icon-sm:active:not(:disabled) {
+    opacity: 0.75 !important;
+  }
+
+  .btn-icon-sm:disabled {
+    opacity: 0.5 !important;
+    pointer-events: none !important;
+  }
+
+  /* Ghost button: fully transparent */
+  .btn-ghost {
+    background: transparent !important;
+    border: 1px solid transparent !important;
+    color: var(--muted-foreground) !important;
+    font-size: var(--text-table-data) !important;
+    border-radius: var(--radius) !important;
+    padding: 0.25rem 0.625rem !important;
+    cursor: pointer !important;
+  }
+
+  .btn-ghost:hover:not(:disabled) {
+    background: var(--color-glass) !important;
+    opacity: 0.9 !important;
+  }
+
+  .btn-ghost:active:not(:disabled) {
+    opacity: 0.75 !important;
+  }
+
+  .btn-ghost:disabled {
+    opacity: 0.5 !important;
+    pointer-events: none !important;
+  }
+
+  /* Square/circle icon button */
+  .btn-icon {
+    width: 2rem !important;
+    height: 2rem !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    background: var(--color-transparent) !important;
+    border: 1px solid var(--glass-border) !important;
+    backdrop-filter: blur(12px) !important;
+    border-radius: var(--radius) !important;
+    color: var(--muted-foreground) !important;
+    cursor: pointer !important;
+  }
+
+  .btn-icon:hover:not(:disabled) {
+    background: var(--color-glass-hover) !important;
+    opacity: 0.9 !important;
+  }
+
+  .btn-icon:active:not(:disabled) {
+    opacity: 0.75 !important;
+  }
+
+  .btn-icon:disabled {
+    opacity: 0.5 !important;
+    pointer-events: none !important;
+  }
+
+  /* Row action button (three-dot) — override ghost purple hover */
+  .btn-row-action {
+    background: transparent !important;
+    border: none !important;
+    color: var(--muted-foreground) !important;
+    opacity: 0.6 !important;
+    cursor: pointer !important;
+  }
+
+  .btn-row-action:hover:not(:disabled) {
+    background: var(--color-glass) !important;
+    opacity: 0.95 !important;
+  }
+
+  .btn-row-action:active:not(:disabled) {
+    opacity: 0.75 !important;
+  }
+
+  .btn-row-action:disabled {
+    opacity: 0.3 !important;
+    pointer-events: none !important;
+  }
+
+  /* ══════════════════════════════════════════════════════
+     F. LAYOUT / STRUCTURE CLASSES
+     ══════════════════════════════════════════════════════ */
+
+  /* Section title (16px) */
+  .section-title {
+    font-size: var(--text-title) !important;
+    font-weight: var(--weight-title) !important;
+    color: var(--foreground) !important;
+    letter-spacing: -0.025em !important;
+  }
+
+  /* Horizontal filter strip */
+  .filter-bar {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.5rem !important;
+    flex-wrap: wrap !important;
+  }
+
+  /* Unified chart tooltip */
+  .chart-tooltip {
+    background: var(--dialog-bg) !important;
+    border: 1px solid var(--glass-border) !important;
+    backdrop-filter: blur(16px) !important;
+    border-radius: 0.75rem !important;
+    padding: 0.75rem 1rem !important;
+    font-size: var(--text-table-data) !important;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, var(--opacity-4x)) !important;
+    /* Keep for shadow, not a color */
+  }
+
+  /* Tab nav bar container (shared base) */
+  .tab-nav-bar {
+    background: var(--color-green-hover);
+    position: sticky !important;
+    top: 0 !important;
+    z-index: 20 !important;
+    overflow-x: auto !important;
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+
+  .tab-nav-bar::-webkit-scrollbar {
+    display: none !important;
+  }
+
+  /* Mobile pill */
+  .tab-pill {
+    padding: 0.5rem 1rem !important;
+    font-size: var(--text-table-data) !important;
+    font-weight: var(--weight-semibold) !important;
+    border-radius: var(--radius) !important;
+    border: 1px solid var(--color-glass) !important;
+    white-space: nowrap !important;
+    cursor: pointer !important;
+    background: var(--color-glass) !important;
+    color: var(--color-text-disabled) !important;
+  }
+
+  .tab-pill:hover:not(.active):not(:disabled) {
+    opacity: 0.9 !important;
+  }
+
+  .tab-pill:active:not(.active):not(:disabled) {
+    opacity: 0.75 !important;
+  }
+
+  .tab-pill.active {
+    background: var(--primary) / 0.15 !important;
+    border-color: var(--primary) / 0.4 !important;
+    color: var(--primary) !important;
+    box-shadow: 0 0 15px var(--primary) / 0.1 !important;
+    transform: scale(1.05) !important;
+    margin-left: 0.25rem !important;
+    margin-right: 0.25rem !important;
+    opacity: 1 !important;
+  }
+
+  .tab-pill:disabled {
+    opacity: 0.4 !important;
+    pointer-events: none !important;
+  }
+
+  /* Desktop button */
+  .tab-btn {
+    padding: 0 0.75rem !important;
+    height: 2rem !important;
+    font-size: var(--text-header-subtitle) !important;
+    font-weight: var(--weight-regular) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    border-radius: calc(var(--radius) - 2px) !important;
+    border: 1px solid transparent !important;
+    cursor: pointer !important;
+    white-space: nowrap !important;
+    flex-shrink: 0 !important;
+    color: var(--muted-foreground) !important;
+    background: transparent !important;
+  }
+
+  .tab-btn:hover:not(.active):not(:disabled) {
+    opacity: 0.9 !important;
+  }
+
+  .tab-btn:active:not(.active):not(:disabled) {
+    opacity: 0.75 !important;
+  }
+
+  .tab-btn.active {
+    color: var(--primary) !important;
+    background: var(--primary) / 0.10 !important;
+    border-color: var(--primary) / 0.22 !important;
+    opacity: 1 !important;
+  }
+
+  .tab-btn:disabled {
+    opacity: 0.4 !important;
+    pointer-events: none !important;
+  }
+
+  /* ══════════════════════════════════════════════════════
+     G. STATUS / SEMANTIC COLOR CLASSES
+     ══════════════════════════════════════════════════════ */
+
+  .text-income {
+    color: var(--color-income) !important;
+  }
+
+  .text-expense {
+    color: var(--color-expense) !important;
+  }
+
+  .text-investment {
+    color: var(--color-investment) !important;
+  }
+
+  .text-savings {
+    color: var(--color-savings) !important;
+  }
+
+  /* ──── Badge Base (Semantic) ──── */
+  /* Uses pre-built badge colors from palette (see --color-badge-*-bg/border) */
+  .badge-income {
+    background: var(--color-badge-lime-bg) !important;
+    border: 1px solid var(--color-badge-lime-border) !important;
+    color: var(--color-income) !important;
+    border-radius: calc(var(--radius) - 2px) !important;
+    font-size: var(--text-badge) !important;
+    font-weight: var(--weight-label) !important;
+    padding: 2px 8px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+  }
+
+  .badge-expense {
+    background: var(--color-badge-amber-bg) !important;
+    border: 1px solid var(--color-badge-amber-border) !important;
+    color: var(--color-expense) !important;
+    border-radius: calc(var(--radius) - 2px) !important;
+    font-size: var(--text-badge) !important;
+    font-weight: var(--weight-label) !important;
+    padding: 2px 8px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+  }
+
+  .badge-investment {
+    background: var(--color-badge-purple-bg) !important;
+    border: 1px solid var(--color-badge-purple-border) !important;
+    color: var(--color-investment) !important;
+    border-radius: calc(var(--radius) - 2px) !important;
+    font-size: var(--text-badge) !important;
+    font-weight: var(--weight-label) !important;
+    padding: 2px 8px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+  }
+
+  .badge-savings {
+    background: var(--color-badge-amber-bg) !important;
+    border: 1px solid var(--color-badge-amber-border) !important;
+    color: var(--color-savings) !important;
+    border-radius: calc(var(--radius) - 2px) !important;
+    font-size: var(--text-badge) !important;
+    font-weight: var(--weight-label) !important;
+    padding: 2px 8px !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════
+   VOICE VIEW UTILITIES
+   Used by: voice/RecordButton, voice/SettingsPopup, voice/HistoryPopup,
+            voice/CurrencyButton, voice/ErrorOverlay, dashboard/page.tsx
+   ═══════════════════════════════════════════════════════════════════ */
+
+/* Record button — base */
+.record-btn {
+  width: 72px;
+  height: 72px;
+  position: relative;
+  z-index: 1;
+  cursor: pointer;
+  transition: background 0.2s, box-shadow 0.2s, border 0.2s, transform 0.2s ease-out;
+}
+
+.record-btn:hover:not(:disabled) {
+  transform: scale(1.08);
+}
+
+
+.record-btn-idle {
+  background: var(--voice-btn-idle-gradient);
+  box-shadow: var(--voice-btn-idle-shadow);
+  border: var(--voice-btn-idle-border);
+}
+
+.record-btn-recording {
+  background: var(--voice-btn-recording-gradient);
+  box-shadow: var(--voice-btn-recording-shadow);
+  border: var(--voice-btn-recording-border);
+}
+
+.record-btn-connecting {
+  background: var(--voice-btn-connecting-gradient);
+  box-shadow: var(--voice-btn-connecting-shadow);
+  border: var(--voice-btn-connecting-border);
+}
+
+.record-btn-error {
+  background: var(--voice-btn-error-gradient);
+  box-shadow: var(--voice-btn-error-shadow);
+  border: var(--voice-btn-error-border);
+  cursor: not-allowed;
+}
+
+/* Status badge — base + variants */
+.voice-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.375rem 1rem;
+  border-radius: 9999px !important;
+  border: 1px solid transparent;
+  font-size: var(--text-table-data);
+  font-weight: var(--weight-title);
+}
+
+.voice-badge-recording {
+  background: var(--voice-badge-recording-bg);
+  border-color: var(--voice-badge-recording-border);
+  color: var(--primary);
+}
+
+.voice-badge-connecting {
+  background: var(--voice-badge-connecting-bg);
+  border-color: var(--voice-badge-connecting-border);
+  color: var(--color-savings);
+}
+
+.voice-badge-processing {
+  background: var(--voice-badge-connecting-bg);
+  border-color: var(--voice-badge-connecting-border);
+  color: var(--color-savings);
+}
+
+.voice-badge-thinking {
+  background: var(--voice-badge-connecting-bg);
+  border-color: var(--voice-badge-connecting-border);
+  color: var(--color-savings);
+}
+
+.voice-badge-error {
+  background: var(--voice-badge-error-bg);
+  border-color: var(--voice-badge-error-border);
+  color: var(--color-expense);
+}
+
+/* Top/bottom bar icon button */
+.voice-bar-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--voice-bar-btn-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px);
+  transition: opacity 0.2s, transform 0.15s;
+}
+
+.voice-bar-btn-sm {
+  width: 40px;
+  height: 40px;
+  border-radius: 9999px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--voice-bar-btn-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px);
+  opacity: var(--opacity-8x);
+  transition: opacity 0.2s;
+}
+
+.voice-bar-btn-sm:hover {
+  opacity: var(--opacity-full);
+}
+
+/* Bottom bar action button (history, camera, language, currency) */
+.voice-action-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 9999px !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--glass-bg-hover);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+/* Text input bar (voice view "ask anything") */
+.voice-input-bar {
+  height: 48px;
+  border-radius: 9999px !important;
+  display: flex;
+  align-items: center;
+  padding: 0 1.25rem;
+  gap: 0.75rem;
+  background: var(--voice-bar-btn-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(12px);
+}
+
+/* WebSocket error banner (top of screen) */
+.voice-ws-error {
+  background: var(--voice-ws-error-bg);
+  border: 1px solid var(--voice-ws-error-border);
+  backdrop-filter: blur(12px);
+  color: var(--voice-ws-error-text);
+}
+
+/* Mic denied banner */
+.voice-mic-denied {
+  background: var(--voice-mic-denied-bg);
+  border: 1px solid var(--voice-mic-denied-border);
+  backdrop-filter: blur(12px);
+  color: var(--color-expense);
+}
+
+/* Chat history message bubbles */
+.history-msg-user {
+  background: var(--voice-msg-user-bg);
+  border: 1px solid var(--voice-msg-user-border);
+  border-bottom-right-radius: 6px !important;
+  border-bottom-left-radius: 16px !important;
+}
+
+.history-msg-agent {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-bottom-left-radius: 6px !important;
+  border-bottom-right-radius: 16px !important;
+}
+
+/* Category badge (accent/investment color) */
+.badge-category {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: calc(var(--radius) - 2px);
+  font-size: var(--text-label);
+  font-weight: var(--weight-title);
+  background: var(--badge-category-bg);
+  border: 1px solid var(--badge-category-border);
+  color: var(--accent);
+}
+
+/* Fallback for radius consistency - exclude circular ones */
+button:not(.btn-round):not(.rounded-full),
+.rounded-lg:not(.btn-round):not(.rounded-full),
+.rounded-md:not(.btn-round):not(.rounded-full),
+.rounded-xl:not(.btn-round):not(.rounded-full),
+.card:not(.btn-round):not(.rounded-full) {
+  border-radius: var(--radius, 0.2rem) !important;
+}
+
+/* ══════════════════════════════════════════════════════════════════════════════
+   PHASE 1: EXTRACTED INLINE STYLES (from components refactoring)
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* ────── 1. COLOR ALIASES ────── */
+.text-muted-dim {
+  color: var(--color-text-dim) !important;
+}
+
+.text-muted-secondary {
+  color: var(--color-text-muted) !important;
+}
+
+.icon-lime {
+  color: var(--primary) !important;
+}
+
+.icon-amber {
+  color: var(--color-savings) !important;
+}
+
+.text-lime {
+  color: var(--primary) !important;
+}
+
+.alert-icon-error {
+  color: var(--color-savings) !important;
+}
+
+/* ────── 2. SPINNER / LOADING ────── */
+.spinner-border {
+  border-top-color: var(--primary) !important;
+  border-right-color: var(--primary) !important;
+}
+
+.spinner-loading {
+  border-color: var(--primary) !important;
+  animation: spin 1s linear infinite !important;
+}
+
+.spinner-lime {
+  border-color: var(--primary) !important;
+  animation: spin 1s linear infinite !important;
+}
+
+/* ────── 3. BORDER UTILITIES ────── */
+.border-subtle {
+  border-color: rgba(255, 255, 255, 0.06) !important;
+}
+
+.border-glass-bottom {
+  border-bottom: 1px solid var(--glass-border) !important;
+}
+
+.dashed-border {
+  border: 1px dashed var(--border) !important;
+}
+
+/* ────── 4. LAYOUT / SCROLLBAR ────── */
+.scrollbar-hidden {
+  scrollbar-width: none !important;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none !important;
+}
+
+/* ────── 5. BUTTON FALLBACKS ────── */
+.btn-error-fallback {
+  background-color: var(--primary) !important;
+  color: var(--primary-foreground) !important;
+}
+
+/* ────── 6. ICON / TABLE STYLING ────── */
+.table-icon {
+  width: 14px !important;
+  height: 14px !important;
+  opacity: 0.7 !important;
+  display: block !important;
+  margin: auto !important;
+}
+
+.trend-icon {
+  color: var(--color-investment) !important;
+}
+
+.chart-icon {
+  color: var(--muted-foreground) !important;
+
+  /* ────── CUSTOM SCROLLBAR ────── */
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 4px !important;
+  }
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: transparent !important;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--glass-border) !important;
+    border-radius: 99px !important;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: var(--primary) !important;
+    opacity: 0.5 !important;
+  }
+}

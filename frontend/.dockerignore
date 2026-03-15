@@ -1,0 +1,11 @@
+.git
+.gitignore
+.env
+.env.*
+.env.local
+.next
+out/
+dist/
+node_modules/
+*.md
+LICENSE

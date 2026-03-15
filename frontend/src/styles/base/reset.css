@@ -1,0 +1,43 @@
+/* ══════════════════════════════════════════════════════════════════════════════
+   5. BASE STYLES & RESETS
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+body {
+  color-scheme: dark;
+}
+
+/* Uniform text selection highlight across the whole app */
+::selection {
+  background-color: var(--primary) / 0.35;
+  color: var(--color-green-deepest);
+}
+
+::-moz-selection {
+  background-color: var(--primary) / 0.35;
+  color: var(--color-green-deepest);
+}
+
+/* Date inputs always in dark mode */
+input[type="date"] {
+  color-scheme: dark;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    letter-spacing: var(--tracking-normal);
+  }
+
+  /* Components fallback to central radius */
+  .card,
+  .button:not(.btn-round),
+  .dropdown-menu,
+  .popover,
+  .badge {
+    border-radius: var(--radius);
+  }
+}

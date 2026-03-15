@@ -1,0 +1,106 @@
+/* ══════════════════════════════════════════════════════════════════════════════
+   3.5. ANIMATIONS & TRANSITIONS (CENTRALIZED)
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* ──── Durations ──── */
+  --duration-instant: 0.1s;
+  --duration-fast: 0.15s;
+  --duration-normal: 0.2s;
+  --duration-slow: 0.3s;
+  --duration-slower: 0.4s;
+
+  /* ──── Easing ──── */
+  --ease-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-in-out: cubic-bezier(0.4, 0, 0.6, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* ──── Button Hover (Unified: opacity + subtle scale) ──── */
+@keyframes btn-hover {
+  to {
+    opacity: 1;
+    transform: scale(1.01);
+  }
+}
+
+/* ──── Icon Spin (Loading states) ──── */
+@keyframes icon-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ──── Pulse (Idle state, breathing effect) ──── */
+@keyframes pulse-opacity {
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
+}
+
+/* ──── Fade In ──── */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+/* ──── Fade Out ──── */
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+/* ──── Slide In (Top to Bottom) ──── */
+@keyframes slide-in-down {
+  from {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* ──── Glow Pulse (Voice button, voice states) ──── */
+@keyframes glow-pulse {
+  0%,
+  100% {
+    box-shadow: 0 0 24px rgba(200, 255, 0, var(--opacity-2x)), 0 4px 20px rgba(0, 0, 0, var(--opacity-4x)), inset 0 1px 0 rgba(255, 255, 255, var(--opacity-2x));
+  }
+
+  50% {
+    box-shadow: 0 0 36px rgba(200, 255, 0, var(--opacity-4x)), 0 8px 32px rgba(0, 0, 0, var(--opacity-8x)), inset 0 1px 0 rgba(255, 255, 255, var(--opacity-2x));
+  }
+}
+
+/* ──── Shimmer (Placeholder, loading skeleton) ──── */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+
+  100% {
+    background-position: 1000px 0;
+  }
+}

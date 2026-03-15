@@ -1,0 +1,23 @@
+/* ══════════════════════════════════════════════════════════════════════════════
+   FINRUSH GLOBAL STYLES - Entry Point
+   ══════════════════════════════════════════════════════════════════════════════ */
+
+/* Import order is critical for correct CSS specificity */
+
+/* 1. Framework imports (Tailwind, fonts, custom variants) */
+@import "./base/imports.css";
+
+/* 2. Theme definition (all CSS custom properties) */
+@import "./theme/theme-finrush.css";
+
+/* 3. Base resets and global styles */
+@import "./base/reset.css";
+
+/* 4. Animation/keyframe definitions */
+@import "./base/animations.css";
+
+/* 5. Utility classes (organized by domain) */
+@import "./utilities/all.css";
+
+/* 6. Tailwind theme extension for CSS utilities */
+@import "./tailwind-theme.css";
