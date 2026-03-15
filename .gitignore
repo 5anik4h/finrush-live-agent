@@ -1,0 +1,133 @@
+# ==========================================
+# 1. DOCUMENTATION & CONFIGURATION FILES
+# ==========================================
+# All markdown files EXCEPT README.md are excluded (local development only)
+*.md
+!README.md              # Only this one is committed
+
+# Development-only directories
+docs/                   # Local documentation (not needed in prod)
+design/                 # Design assets (not needed in prod)
+.agents/                # Claude Code cache
+.claude/                # Claude Code configuration (except what's needed)
+
+# ==========================================
+# 2. SECRETS & ENVIRONMENT
+# ==========================================
+.env                    # Local .env with secrets
+.env.local
+.env.*.local
+.env.production.local
+.env.development.local
+.env.test.local
+*.pem                   # Private keys
+*.key                   # Private keys
+*.crt                   # Certificates
+*.p8                    # Private keys (PKCS8)
+.mcp.json               # MCP credentials (local only)
+
+# ==========================================
+# 3. IDE & EDITOR CONFIGS (local only)
+# ==========================================
+.vscode/                # VS Code settings
+.idea/                  # JetBrains IDE
+*.sublime-workspace     # Sublime Text
+.vim/
+.emacs.d/
+.netrc
+.editorconfig.local
+
+# Text editor temp files
+*.swp
+*.swo
+*~
+.#*
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Windows
+Thumbs.db
+Desktop.ini
+ehthumbs.db
+
+# ==========================================
+# 4. DEVELOPMENT ARTIFACTS (NOT FOR DEPLOY)
+# ==========================================
+
+# Node.js (Frontend)
+frontend/node_modules/
+frontend/dist/
+frontend/.next/
+frontend/out/
+frontend/build/
+frontend/*.tsbuildinfo
+
+# Python (Backend)
+backend/venv/
+backend/.venv/
+backend/env/
+backend/__pycache__/
+backend/.pytest_cache/
+backend/.coverage
+backend/htmlcov/
+backend/*.py[cod]
+backend/*$py.class
+backend/.mypy_cache/
+backend/.ruff_cache/
+backend/*.egg-info/
+backend/*.egg
+backend/.eggs/
+
+# ==========================================
+# 5. LOGS & TEMPORARY FILES
+# ==========================================
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+pip-log.txt
+pip-delete-this-directory.txt
+*.tmp
+*.temp
+*.bak
+*.backup
+
+# ==========================================
+# 6. BUILD & CACHE
+# ==========================================
+dist/
+build/
+.turbo/
+.cache/
+.eslintcache
+.stylelintcache
+
+# ==========================================
+# 7. JUPYTER & NOTEBOOKS
+# ==========================================
+.ipynb_checkpoints/
+*.ipynb
+
+# ==========================================
+# 8. DEPRECATED/OLD CODE
+# ==========================================
+old/
+deprecated/
+backup/
+test-scripts/
+
+# ==========================================
+# WHAT GETS DEPLOYED (TRACKED)
+# ==========================================
+# ✅ backend/               FastAPI source
+# ✅ frontend/              Next.js React app
+# ✅ .github/               CI/CD workflows
+# ✅ README.md              Main documentation
+# ✅ .gitignore             Git rules
