@@ -17,9 +17,16 @@ design/                 # Design assets (not needed in prod)
 .env                    # Local .env with secrets
 .env.local
 .env.*.local
+.env.production
 .env.production.local
 .env.development.local
 .env.test.local
+backend/.env
+backend/.env.*
+frontend/.env
+frontend/.env.*
+!backend/.env.example
+!frontend/.env.example
 *.pem                   # Private keys
 *.key                   # Private keys
 *.crt                   # Certificates
@@ -65,12 +72,14 @@ frontend/.next/
 frontend/out/
 frontend/build/
 frontend/*.tsbuildinfo
+frontend/next-env.d.ts
 
 # Python (Backend)
 backend/venv/
 backend/.venv/
 backend/env/
 backend/__pycache__/
+**/__pycache__/
 backend/.pytest_cache/
 backend/.coverage
 backend/htmlcov/
