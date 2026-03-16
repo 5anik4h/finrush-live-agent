@@ -345,10 +345,12 @@ GROUP A — Tradeable (live prices, buy/sell):
   - name: display name (optional — auto-filled with ticker if omitted)
   - quantity: number of units — use when user says "5 shares" or "0.1 BTC"
   - total_amount: total money invested — alternative, use when user says "€1000 of Apple"
-  - buy_price: price per unit in user's currency. DISABLED unless skip_price_update=true. If omitted → fetched live.
+  - buy_price: HISTORICAL purchase price per unit in user's currency. Always editable. If omitted → 0 (or live price if no skip_price_update).
+  - current_price: CURRENT market price per unit. Auto-fetched live when skip_price_update=false. Editable when skip_price_update=true.
   - currency: MUST match user's selected currency; from get_market_price if auto-fetched
   - date: purchase date YYYY-MM-DD (REQUIRED by form)
-  - skip_price_update: boolean. false (default) = price updates automatically. true = manual price, no auto-updates.
+  - skip_price_update: boolean. false (default) = current_price updates automatically. true = manual prices, no auto-updates.
+  ⚠️ buy_price and current_price are SEPARATE fields. buy_price = what you paid. current_price = what it's worth now.
   ⚠️ ETF now uses `quantity` NOT `shares` — shares column was renamed.
   ⚠️ Do NOT pass: exchange, wallet, unit (these columns no longer exist).
 
@@ -357,7 +359,9 @@ GROUP A — Tradeable (live prices, buy/sell):
     Ask user for date if not provided.
 
   EDIT (update_investment) — any of these fields can be changed:
-    ticker, name, quantity, buy_price (only if skip_price_update=true), current_price, currency, date, skip_price_update
+    ticker, name, quantity, buy_price (historical purchase price — always editable),
+    current_price (current market price — pass to override auto-refresh value),
+    currency, date, skip_price_update
 
   SELL (sell_investment) — ONLY for Group A:
     Partial sell: quantity= (units to sell), sale_price= (optional, auto-fetched if omitted)
@@ -423,16 +427,17 @@ GROUP C — Special types:
   KEY FIELDS — fund:
   - name: fund name (REQUIRED)
   - quantity: number of units/participaciones (REQUIRED)
-  - buy_price: price per unit at purchase (in user's currency) — optional, auto-calculated if total_amount given
+  - buy_price: HISTORICAL price per unit at purchase (in user's currency) — optional, auto-calculated if total_amount given
   - total_amount: alternative to quantity (derives quantity = total / buy_price)
-  - current_value: total current value (optional — defaults to quantity × buy_price if omitted)
+  - current_value: CURRENT total fund value — optional, defaults to quantity × buy_price if omitted. Update this when the fund NAV changes.
   - ter: TER/annual management fee % (e.g. 0.20, optional)
   - currency: user's selected currency — REQUIRED
   - date: purchase date YYYY-MM-DD (REQUIRED by form)
+  ⚠️ buy_price = purchase price per unit. current_value = total current market value (not per unit).
   ⚠️ Do NOT pass: isin, fund_type, management_fee, capital_invested (all dropped).
 
   CREATE — minimum required: name, quantity OR total_amount, currency, date
-  EDIT — any field can be updated: name, quantity, buy_price, current_value, ter, currency, date
+  EDIT — any field can be updated: name, quantity, buy_price, current_value (total current market value), ter, currency, date
   DELETE (delete_investment) — use to remove fund position (no income transaction).
 
   KEY FIELDS — realestate:
@@ -867,10 +872,12 @@ GRUPO A — Tradeables (precios live, compra/venta):
   - name: nombre para mostrar (opcional — se rellena con ticker si falta)
   - quantity: número de unidades — usa cuando dice "5 acciones" o "0.1 BTC"
   - total_amount: importe total invertido — alternativa cuando dice "€1000 de Apple"
-  - buy_price: precio por unidad en la moneda del usuario. DESACTIVADO a menos que skip_price_update=true. Si falta → se obtiene live.
+  - buy_price: precio HISTÓRICO de compra por unidad en la moneda del usuario. Siempre editable. Si falta → 0 (o precio live si no hay skip_price_update).
+  - current_price: precio ACTUAL de mercado por unidad. Se obtiene live automáticamente si skip_price_update=false. Editable si skip_price_update=true.
   - currency: DEBE coincidir con la moneda seleccionada por el usuario; de get_market_price si auto-fetch
   - date: fecha de compra YYYY-MM-DD (OBLIGATORIO en formulario)
-  - skip_price_update: booleano. false (por defecto) = precio se actualiza automáticamente. true = precio manual, sin auto-actualizaciones.
+  - skip_price_update: booleano. false (por defecto) = current_price se actualiza automáticamente. true = precios manuales, sin auto-actualizaciones.
+  ⚠️ buy_price y current_price son CAMPOS SEPARADOS. buy_price = lo que pagaste. current_price = lo que vale ahora.
   ⚠️ ETF ahora usa `quantity` NO `shares` — la columna shares fue renombrada.
   ⚠️ NO pasar: exchange, wallet, unit (estas columnas ya no existen).
 
@@ -879,7 +886,9 @@ GRUPO A — Tradeables (precios live, compra/venta):
     Pide la fecha si el usuario no la indica.
 
   EDITAR (update_investment) — cualquiera de estos campos puede cambiarse:
-    ticker, name, quantity, buy_price (solo si skip_price_update=true), current_price, currency, date, skip_price_update
+    ticker, name, quantity, buy_price (precio histórico de compra — siempre editable),
+    current_price (precio actual de mercado — pásalo para anular el valor de auto-actualización),
+    currency, date, skip_price_update
 
   VENDER (sell_investment) — SOLO para el Grupo A:
     Venta parcial: quantity= (unidades a vender), sale_price= (opcional, auto-fetch si falta)
@@ -945,16 +954,17 @@ GRUPO C — Tipos especiales:
   CAMPOS — fund (fondos de inversión):
   - name: nombre del fondo (OBLIGATORIO)
   - quantity: número de participaciones (OBLIGATORIO)
-  - buy_price: precio por participación en la compra (en la moneda del usuario) — opcional, se calcula si se da total_amount
+  - buy_price: precio HISTÓRICO por participación en la compra (en la moneda del usuario) — opcional, se calcula si se da total_amount
   - total_amount: alternativa a quantity (deriva quantity = total / buy_price)
-  - current_value: valor total actual (opcional — por defecto quantity × buy_price si falta)
+  - current_value: valor total ACTUAL del fondo — opcional, por defecto quantity × buy_price si falta. Actualizar cuando cambie el NAV del fondo.
   - ter: comisión anual TER % (ej. 0.20, opcional)
   - currency: moneda del usuario — OBLIGATORIO
   - date: fecha de compra YYYY-MM-DD (OBLIGATORIO en formulario)
+  ⚠️ buy_price = precio de compra por participación. current_value = valor de mercado total actual (no por participación).
   ⚠️ NO pasar: isin, fund_type, management_fee, capital_invested (todos eliminados).
 
   CREAR — campos mínimos: name, quantity O total_amount, currency, date
-  EDITAR — cualquier campo puede actualizarse: name, quantity, buy_price, current_value, ter, currency, date
+  EDITAR — cualquier campo puede actualizarse: name, quantity, buy_price, current_value (valor total actual de mercado), ter, currency, date
   ELIMINAR (delete_investment) — para cerrar posición en fondo (sin transacción de ingreso).
 
   CAMPOS — realestate (inmobiliario):

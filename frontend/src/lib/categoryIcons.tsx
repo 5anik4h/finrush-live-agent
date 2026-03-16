@@ -24,6 +24,10 @@ import {
     CreditCard,
     PiggyBank,
     Smartphone,
+    Shirt,
+    Laptop,
+    Dices,
+    Croissant,
     // Income category icons
     Briefcase,
     FileText,
@@ -69,6 +73,10 @@ export const CATEGORY_ICONS: Record<string, LucideIcon> = {
     taxes: Landmark,
     investment_transfer: CreditCard,
     savings_contribution: PiggyBank,
+    clothing: Shirt,
+    technology: Laptop,
+    gambling: Dices,
+    breakfast: Croissant,
     // income
     salary: Briefcase,
     freelance: FileText,

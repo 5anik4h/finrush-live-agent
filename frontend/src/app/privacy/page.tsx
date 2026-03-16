@@ -1,6 +1,7 @@
 import LandingLayout from "@/components/landing/LandingLayout";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { EmailObfuscator } from "@/components/common/EmailObfuscator";
 
 export default function PrivacyPolicy() {
   return (
@@ -10,10 +11,10 @@ export default function PrivacyPolicy() {
           <ArrowLeft className="w-4 h-4" /> Back to Home
         </Link>
         <h1 className="text-4xl font-bold mb-8">Privacy Policy</h1>
-        
+
         <div className="prose prose-invert max-w-none text-gray-300 space-y-6">
-          <p><strong>Last Updated:</strong> [Date]</p>
-          
+          <p><strong>Last Updated:</strong> 03-16-2026</p>
+
           <h2 className="text-2xl font-semibold text-white mt-8 mb-4">1. Introduction</h2>
           <p>Welcome to Finrush. We respect your privacy and are committed to protecting your personal data. This privacy policy will inform you as to how we look after your personal data when you visit our website (regardless of where you visit it from) and tell you about your privacy rights and how the law protects you.</p>
 
@@ -43,8 +44,9 @@ export default function PrivacyPolicy() {
 
           <h2 className="text-2xl font-semibold text-white mt-8 mb-4">6. Contact Details</h2>
           <p>If you have any questions about this privacy policy or our privacy practices, please contact us at:</p>
-          <p>Email address: [Email Address]</p>
-          <p>Postal address: [Company Address]</p>
+          <p>
+            Email address: <EmailObfuscator user="support" domain="finrush.app" />
+          </p>
         </div>
       </div>
     </LandingLayout>

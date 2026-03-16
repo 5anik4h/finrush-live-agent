@@ -136,13 +136,6 @@ export default function LandingPage() {
                 Sign In for Free <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </span>
             </Link>
-            
-            <Link
-              href="/demo"
-              className="group inline-flex items-center justify-center px-8 py-4 text-base font-bold text-white bg-transparent border-2 border-white/20 rounded-full hover:bg-white/5 hover:border-white/40 transition-all w-full sm:w-auto"
-            >
-              Try Live Demo
-            </Link>
           </div>
         </div>
       </section>
@@ -201,11 +194,11 @@ export default function LandingPage() {
         <div className="container mx-auto max-w-5xl text-center px-6">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 mb-8">
             <span className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)]"></span>
-            <span className="text-sm font-medium text-emerald-400">Bank-Level Security</span>
+            <span className="text-sm font-medium text-emerald-400">High-Level Security</span>
           </div>
           <h2 className="text-3xl md:text-5xl font-bold mb-6">Privacy First. Always.</h2>
           <p className="text-gray-400 text-lg mb-16 max-w-2xl mx-auto">Your financial data is yours alone. We employ industry-leading encryption so you can track your wealth with peace of mind.</p>
-          
+
           <div className="grid md:grid-cols-3 gap-8 text-left">
             <div className="p-8 rounded-3xl bg-white/5 border border-white/10 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500/10 rounded-bl-full filter blur-xl"></div>
@@ -214,7 +207,7 @@ export default function LandingPage() {
             </div>
             <div className="p-8 rounded-3xl bg-white/5 border border-white/10 relative overflow-hidden">
               <div className="absolute top-0 right-0 w-32 h-32 bg-blue-500/10 rounded-bl-full filter blur-xl"></div>
-              <h3 className="text-xl font-bold mb-3 text-white">No Data Selling</h3>
+              <h3 className="text-xl font-bold mb-3 text-white">Your data is yours</h3>
               <p className="text-gray-400">We do not sell your personal or financial data to third parties. Your information is never used for targeted ads.</p>
             </div>
             <div className="p-8 rounded-3xl bg-white/5 border border-white/10 relative overflow-hidden">

@@ -522,44 +522,50 @@ export default function InversionTab({ session, refreshKey }: InversionTabProps)
 
         const field = "quantity";
         const qty = Number(payload[field] || 0);
-        const bp = Number(payload.buy_price ?? 0);
+        const bp = Number(payload.buy_price ?? 0);          // historical buy price (always from form)
+        const cpFromForm = Number(payload.current_price ?? 0); // current price (from form if skip=true)
+        const skipUpdate = Boolean(payload.skip_price_update);
         const totalAmt = Number(payload.total_amount || 0);
         delete payload.total_amount;
 
-        if (qty > 0 && bp > 0) {
-          // Case 1: user gave both qty and price — use as-is (respects user's currency)
-          // current_price defaults to buy_price if not fetched separately
-          if (!payload.current_price) payload.current_price = bp;
-        } else if (totalAmt > 0 && bp > 0) {
-          // Case 2: user gave total amount and price per unit (same currency) → derive qty
-          payload[field] = parseFloat((totalAmt / bp).toFixed(6));
-          payload.buy_price = bp;
-          if (!payload.current_price) payload.current_price = bp;
-        } else {
-          // Case 3: user didn't provide buy_price → fetch live price (always USD)
-          // Only safe when asset is priced in USD (US stocks, crypto, commodities via futures)
-          if (!payload.current_price && payload.ticker) {
+        // ── Resolve quantity from total_amount if needed ──
+        if (qty <= 0 && totalAmt > 0) {
+          const refPrice = bp > 0 ? bp : cpFromForm;
+          if (refPrice > 0) {
+            payload[field] = parseFloat((totalAmt / refPrice).toFixed(6));
+          } else if (payload.ticker) {
+            // No price at all — fetch live to derive qty
             const fetched = await fetchPrice(String(payload.ticker), dialogType);
-            if (fetched !== null) payload.current_price = fetched;
+            if (fetched !== null && fetched > 0) {
+              payload[field] = parseFloat((totalAmt / fetched).toFixed(6));
+              // live price becomes current_price
+              if (!skipUpdate) payload.current_price = fetched;
+            }
           }
-          const livePrice = Number(payload.current_price || 0);
-          if (totalAmt > 0 && livePrice > 0) {
-            payload[field] = parseFloat((totalAmt / livePrice).toFixed(6));
-            payload.buy_price = livePrice;
-          } else if (qty > 0 && livePrice > 0) {
-            payload.buy_price = livePrice;
-            payload.current_price = livePrice;
-          } else if (qty > 0) {
-            // No price available at all
-            payload.buy_price = 0;
-            payload.current_price = 0;
-          } else if (bp > 0) {
-            // Only price given without qty or total
-            payload[field] = 1;
-            payload.current_price = bp;
-          }
+        } else if (qty <= 0 && bp > 0) {
+          // Only price given without qty or total → qty = 1 (agent usually handles this correctly)
+          payload[field] = 1;
         }
-        // Ensure buy_price is never null/missing (NOT NULL constraint)
+
+        // ── Resolve current_price independently from buy_price ──
+        if (skipUpdate) {
+          // Manual mode: both prices come from form. current_price falls back to buy_price if empty.
+          payload.buy_price = bp || 0;
+          payload.current_price = cpFromForm || bp || 0;
+        } else {
+          // Auto mode: buy_price is the HISTORICAL price (always from form, never overwritten by live).
+          // current_price is fetched live (skip_price_update=false means auto-refresh enabled).
+          let livePrice: number | null = null;
+          if (payload.ticker) {
+            livePrice = await fetchPrice(String(payload.ticker), dialogType);
+          }
+          // buy_price = what the user paid (historical) — never replace with live price
+          payload.buy_price = bp || 0;
+          // current_price = live market price; fallback to buy_price if fetch fails
+          payload.current_price = livePrice ?? cpFromForm ?? bp ?? 0;
+        }
+
+        // Ensure neither is null/missing (DB NOT NULL constraint)
         if (payload.buy_price == null || payload.buy_price === "") payload.buy_price = 0;
         if (payload.current_price == null || payload.current_price === "") payload.current_price = payload.buy_price;
 
@@ -581,6 +587,13 @@ export default function InversionTab({ session, refreshKey }: InversionTabProps)
         }
         // Fund: buy_price → buy_price_usd; current_value → current_value_usd
         if (dialogType === "fund") {
+          // Derive buy_price from total_amount / quantity if buy_price not provided
+          const fundQty = Number(payload.quantity || 0);
+          const fundTotal = Number(payload.total_amount || 0);
+          if ((payload.buy_price == null || Number(payload.buy_price) === 0) && fundTotal > 0 && fundQty > 0) {
+            payload.buy_price = parseFloat((fundTotal / fundQty).toFixed(6));
+          }
+          delete payload.total_amount;
           if (payload.buy_price != null) payload.buy_price_usd = resolveToUsd(Number(payload.buy_price), entryCurrency, fxRates).amountUsd;
           if (payload.current_value != null) payload.current_value_usd = resolveToUsd(Number(payload.current_value), entryCurrency, fxRates).amountUsd;
         }

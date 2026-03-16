@@ -76,47 +76,48 @@ export async function getInvestmentsSummary(
     }
   }
 
-  // ETFs use "shares" column
+  // ETFs use "quantity" column (unified schema - Session 68)
   const { data: etfs } = await supabase
     .from("inv_etfs")
-    .select("id, shares, buy_price, current_price")
+    .select("id, quantity, buy_price, current_price")
     .eq("user_id", userId);
   if (etfs) {
     for (const row of etfs) {
       all.push({
         id: row.id,
-        quantity: Number(row.shares ?? 0),
+        quantity: Number(row.quantity ?? 0),
         buy_price: Number(row.buy_price ?? 0),
         current_price: Number(row.current_price ?? row.buy_price ?? 0),
       });
     }
   }
 
-  // Funds: capital_invested / current_value
+  // Funds: quantity × buy_price / current_value (unified schema - Session 68)
   const { data: funds } = await supabase
     .from("inv_funds")
-    .select("id, capital_invested, current_value")
+    .select("id, quantity, buy_price, current_value, current_value_usd")
     .eq("user_id", userId);
   if (funds) {
     for (const f of funds) {
+      const invested = Number(f.quantity ?? 1) * Number(f.buy_price ?? 0);
       all.push({
         id: f.id,
         quantity: 1,
-        buy_price: Number(f.capital_invested ?? 0),
-        current_price: Number(f.current_value ?? f.capital_invested ?? 0),
+        buy_price: invested,
+        current_price: Number(f.current_value ?? f.current_value_usd ?? invested),
       });
     }
   }
 
-  // Group B — principal + compound interest
+  // Group B — quantity + compound interest (unified schema - Session 68)
   for (const tbl of ["inv_fixedincome", "inv_accounts"]) {
     const { data } = await supabase
       .from(tbl)
-      .select("id, principal, apy, frequency, start_date")
+      .select("id, quantity, apy, frequency, start_date")
       .eq("user_id", userId);
     if (data) {
       for (const row of data) {
-        const principal = Number(row.principal ?? 0);
+        const principal = Number(row.quantity ?? 0);
         const interest = calcCompoundInterest(
           principal,
           Number(row.apy ?? 0),
@@ -133,21 +134,21 @@ export async function getInvestmentsSummary(
     }
   }
 
-  // Crowdlending: capital + accumulated_interest (or recalculated)
+  // Crowdlending: quantity + accumulated_interest (unified schema - Session 68)
   const { data: cl } = await supabase
     .from("inv_crowdlending")
-    .select("id, capital, interest_rate, frequency, start_date, accumulated_interest")
+    .select("id, quantity, apy, frequency, start_date, accumulated_interest, accumulated_interest_usd")
     .eq("user_id", userId);
   if (cl) {
     for (const c of cl) {
-      const cap = Number(c.capital ?? 0);
+      const cap = Number(c.quantity ?? 0);
       const accrued = calcCompoundInterest(
         cap,
-        Number(c.interest_rate ?? 0),
+        Number(c.apy ?? 0),
         c.frequency ?? "monthly",
         c.start_date ?? new Date().toISOString().slice(0, 10)
       );
-      const interest = Math.max(Number(c.accumulated_interest ?? 0), accrued);
+      const interest = Math.max(Number(c.accumulated_interest ?? c.accumulated_interest_usd ?? 0), accrued);
       all.push({
         id: c.id,
         quantity: 1,
@@ -175,18 +176,19 @@ export async function getInvestmentsSummary(
     }
   }
 
-  // Forex: amount (liquidity store, no price appreciation)
+  // Forex: quantity_usd (liquidity store, unified schema - Session 68)
   const { data: fx } = await supabase
     .from("inv_forex")
-    .select("id, amount")
+    .select("id, quantity, quantity_usd, currency")
     .eq("user_id", userId);
   if (fx) {
     for (const f of fx) {
+      const value = Number(f.quantity_usd ?? f.quantity ?? 0);
       all.push({
         id: f.id,
         quantity: 1,
-        buy_price: Number(f.amount ?? 0),
-        current_price: Number(f.amount ?? 0),
+        buy_price: value,
+        current_price: value,
       });
     }
   }

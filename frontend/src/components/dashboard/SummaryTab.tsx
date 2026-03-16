@@ -348,7 +348,7 @@ export default function ResumenTab({ transactions, savingsPots, session }: Resum
                   tick={{ fill: "var(--muted-foreground)", fontSize: 10 }}
                   axisLine={false}
                   width={56}
-                  domain={['auto', 'auto']}
+                  domain={[0, 'auto']}
                   tickFormatter={(v: number) => {
                     const sym = currency === "EUR" ? "€" : currency === "GBP" ? "£" : "$";
                     const abs = Math.abs(v);

@@ -81,7 +81,7 @@ _PRICE_RATE_WINDOW_S = 60.0
 @app.get("/")
 async def root_redirect():
     # Phase 6, Item 4 - Backend API root polish
-    return RedirectResponse(url="https://me4dows.com", status_code=302)
+    return RedirectResponse(url="https://finrush.app", status_code=302)
 
 @app.get("/api/rates")
 async def get_exchange_rates():

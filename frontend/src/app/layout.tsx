@@ -17,9 +17,10 @@ export const metadata: Metadata = {
   description: "Live AI Financial Assistant powered by Gemini",
   icons: {
     icon: [
+      { url: "/logo/finrush-192.png", sizes: "192x192", type: "image/png" },
       { url: "/logo/finrush_favicon_fr.svg", type: "image/svg+xml" },
     ],
-    apple: "/logo/finrush_favicon_fr.svg",
+    apple: "/logo/apple-touch-icon.png",
   },
   manifest: "/manifest.json",
   appleWebApp: {

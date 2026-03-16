@@ -48,10 +48,10 @@ export interface FormField {
    ═══════════════════════════════════════════════ */
 
 export const MONETARY_FIELDS_BY_TYPE: Record<string, string[]> = {
-  stock:        ["buy_price"],
-  commodity:    ["buy_price"],
-  crypto:       ["buy_price"],
-  etf:          ["buy_price"],
+  stock:        ["buy_price", "current_price"],
+  commodity:    ["buy_price", "current_price"],
+  crypto:       ["buy_price", "current_price"],
+  etf:          ["buy_price", "current_price"],
   fund:         ["buy_price", "current_value"],
   fixedincome:  ["quantity", "accumulated_interest"],
   crowdlending: ["quantity", "accumulated_interest"],
@@ -77,8 +77,8 @@ const FREQUENCY_OPTIONS = [
    Layout:
      [TICKER          ] [NOMBRE           ]
      [CANTIDAD        ] [VALOR TOTAL      ]
-     [PRECIO COMPRA   ] [DIVISA (selector)]
-     [PRECIO MANUAL   ]
+     [P. COMPRA       ] [ACTUAL           ]
+     [DIVISA (select) ] [TOGGLE manual    ]
      [FECHA (full)    ]
    ═══════════════════════════════════════════════ */
 
@@ -87,12 +87,13 @@ const GROUP_A_FIELDS: FormField[] = [
   { key: "name",              label_en: "Name",         label_es: "Nombre",      type: "text",   maxLength: 60,                   half: true },
   { key: "quantity",          label_en: "Quantity",     label_es: "Cantidad",    type: "number", step: "any",                     half: true },
   { key: "total_amount",      label_en: "Total Value",  label_es: "Valor Total", type: "number", step: "any",                     half: true },
-  { key: "buy_price",         label_en: "Buy Price",    label_es: "P. Compra",   type: "number", step: "any",     half: true,
+  { key: "buy_price",         label_en: "Buy Price",    label_es: "P. Compra",   type: "number", step: "any",     half: true,     placeholder: "0" },
+  { key: "current_price",     label_en: "Current",      label_es: "Actual",      type: "number", step: "any",     half: true,
     placeholder: "Auto",
-    disabledWhen:  (data) => !data.skip_price_update,
-    requiredWhen:  (data) => !!data.skip_price_update,
+    disabledWhen: (data) => !data.skip_price_update,
+    requiredWhen: (data) => !!data.skip_price_update,
   },
-  // currency is rendered separately as a Select, not here
+  // currency is rendered as a standalone half-width row (left side) before skip_price_update
   { key: "skip_price_update", label_en: "Manual price (no auto-update)", label_es: "Precio manual (sin actualización automática)", type: "toggle" },
   { key: "date",              label_en: "Date",         label_es: "Fecha",       type: "date",   required: true },
 ];
@@ -140,15 +141,22 @@ export function getFormFields(type: AssetType): FormField[] {
       return GROUP_B_FIELDS;
 
     // ── Fund ─────────────────────────────────────────────────────────────────
+    // Layout:
+    //   [NOMBRE DEL FONDO (full)         ]
+    //   [PARTICIPACIONES ] [VALOR TOTAL  ]
+    //   [P. COMPRA       ] [VALOR ACTUAL ]
+    //   [DIVISA (select) ] [TER %        ]
+    //   [FECHA (full)    ]
     case "fund":
       return [
-        { key: "name",         label_en: "Fund Name",   label_es: "Nombre del Fondo", type: "text",   required: true, maxLength: 60 },
-        { key: "quantity",     label_en: "Units",       label_es: "Participaciones",  type: "number", step: "any",    half: true },
-        { key: "total_amount", label_en: "Total Value", label_es: "Valor Total",      type: "number", step: "any",    half: true },
-        { key: "buy_price",    label_en: "Buy Price",   label_es: "P. Compra",        type: "number", step: "any",    placeholder: "Auto", half: true },
-        // currency rendered separately — fills the other half
-        { key: "ter",          label_en: "TER %",       label_es: "TER %",            type: "number", step: "0.01",   placeholder: "0.20" },
-        { key: "date",         label_en: "Date",        label_es: "Fecha",            type: "date",   required: true },
+        { key: "name",          label_en: "Fund Name",     label_es: "Nombre del Fondo", type: "text",   required: true, maxLength: 60 },
+        { key: "quantity",      label_en: "Units",         label_es: "Participaciones",  type: "number", step: "any",    half: true },
+        { key: "total_amount",  label_en: "Total Value",   label_es: "Valor Total",      type: "number", step: "any",    half: true },
+        { key: "buy_price",     label_en: "Buy Price",     label_es: "P. Compra",        type: "number", step: "any",    placeholder: "Auto", half: true },
+        { key: "current_value", label_en: "Current Value", label_es: "Valor Actual",     type: "number", step: "any",    placeholder: "Auto", half: true },
+        // currency rendered inline after current_value (fills DIVISA slot)
+        { key: "ter",           label_en: "TER %",         label_es: "TER %",            type: "number", step: "0.01",   placeholder: "0.20", half: true },
+        { key: "date",          label_en: "Date",          label_es: "Fecha",            type: "date",   required: true },
       ];
 
     // ── Forex ─────────────────────────────────────────────────────────────────
@@ -182,18 +190,21 @@ export function getFormFields(type: AssetType): FormField[] {
    vs FULL WIDTH (after fields list)
    ═══════════════════════════════════════════════ */
 
-// For Group A: currency renders alongside buy_price (half+half row)
+// For Group A: currency renders as its own half-width row (left side) before the toggle
 // For Group B: currency renders alongside quantity (half+half row)
-// For Fund: currency renders alongside buy_price (half+half row)
+// For Fund: currency renders alongside ter (half+half row)
 // For Forex: currency renders alongside quantity (half+half row)
 // For RealEstate: currency renders full width after date
 // These types render currency INLINE in the fields grid (not appended at end)
+// Group A is NOT in this map — it uses CURRENCY_BEFORE_TOGGLE instead
 const CURRENCY_INLINE_AFTER: Record<string, string> = {
-  stock: "buy_price", crypto: "buy_price", etf: "buy_price", commodity: "buy_price",
   fixedincome: "quantity", account: "quantity", crowdlending: "quantity",
-  fund: "buy_price",
+  fund: "ter",
   forex: "quantity",
 };
+
+// Group A types: currency renders as a standalone half-width row before skip_price_update toggle
+const CURRENCY_BEFORE_TOGGLE_TYPES = new Set(["stock", "crypto", "etf", "commodity"]);
 
 /* ═══════════════════════════════════════════════
    PROPS
@@ -424,7 +435,17 @@ export default function InvestmentForm({
                 continue;
               }
 
-              if (f.type === "toggle") {
+              // For Group A: inject currency as half-width row just before the toggle
+              if (f.type === "toggle" && CURRENCY_BEFORE_TOGGLE_TYPES.has(dialogType)) {
+                elements.push(
+                  <div key="currency-group-a-row" className="grid grid-cols-2 gap-3">
+                    {renderCurrencySelect(true)}
+                    <div />
+                  </div>
+                );
+                elements.push(<div key={f.key}>{renderField(f, isCreateMode)}</div>);
+                i++;
+              } else if (f.type === "toggle") {
                 elements.push(<div key={f.key}>{renderField(f, isCreateMode)}</div>);
                 i++;
               } else if (f.half && next?.half && next.type !== "toggle") {

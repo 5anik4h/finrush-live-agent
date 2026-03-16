@@ -193,6 +193,4 @@ This project is licensed under the **Apache License 2.0** — see the [LICENSE](
 
 ---
 
-**Made with ❤️ for the #GeminiLiveAgentChallenge**
-
-[Visit Finrush →](https://finrush.app)
+**Made with ❤️ for the #GeminiLiveAgentChallenge**[Visit Finrush →](https://finrush.app)

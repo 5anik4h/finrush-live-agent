@@ -7,18 +7,44 @@
   "background_color": "#000000",
   "theme_color": "#000000",
   "orientation": "portrait",
+  "categories": [
+    "finance",
+    "productivity"
+  ],
   "icons": [
     {
-      "src": "/logo/finrush_favicon_fr.svg",
+      "src": "/logo/finrush-192.png",
       "sizes": "192x192",
-      "type": "image/svg+xml",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "/logo/finrush-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
       "purpose": "any"
     },
     {
       "src": "/logo/finrush_favicon_fr.svg",
-      "sizes": "512x512",
+      "sizes": "any",
       "type": "image/svg+xml",
-      "purpose": "maskable"
+      "purpose": "any"
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/desktop.png",
+      "sizes": "1600x960",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Finrush Dashboard Masterview"
+    },
+    {
+      "src": "/screenshots/mobile.jpg",
+      "sizes": "1080x2190",
+      "type": "image/jpeg",
+      "form_factor": "narrow",
+      "label": "Voice Intelligence Interface"
     }
   ]
 }

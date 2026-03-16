@@ -100,7 +100,7 @@ export default function SavingsPotFormDialog({
                 type="number"
                 min="0"
                 step="0.01"
-                placeholder={t("Leave empty", "Vacío")}
+                placeholder={t("Required", "Requerido")}
                 value={form.target_amount}
                 onChange={(e) => onFormChange({ ...form, target_amount: e.target.value })}
                 className="dialog-input w-full"

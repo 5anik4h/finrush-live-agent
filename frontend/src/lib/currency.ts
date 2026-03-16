@@ -48,13 +48,6 @@ export function convertFromUSD(amount: number, to: Currency, rates: Record<Curre
   return amount * rates[to];
 }
 
-// Convert an amount from the source currency to USD using provided rates
-export function convertToUSD(amount: number, from: Currency, rates: Record<Currency, number>): number {
-  if (from === "USD") return amount;
-  const rate = rates[from] || 1;
-  return amount / rate;
-}
-
 // ─── Regla de oro: 2 decimales ───────────────────────────────────────────────
 // All monetary amounts must be rounded to 2 decimal places before being sent
 // to the backend or stored in Supabase. Backend trusts these values as-is.

@@ -98,12 +98,6 @@ def resolve_currency(
     return amount, amount, 1.0
 
 
-def convert_to_usd(amount: float, currency: str | None, user_currency: str, supabase) -> float:
-    """Legacy wrapper — returns only amount_usd. Use resolve_currency() for new code."""
-    _, amount_usd, _ = resolve_currency(amount, currency, user_currency, supabase)
-    return amount_usd
-
-
 def add_transaction(supabase, user_id: str, args: AddTransactionArgs, user_currency: str) -> dict:
     date_str = _resolve_timestamp(args.date)
     formatted_category = _normalize_category(args.category or "")

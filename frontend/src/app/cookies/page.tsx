@@ -10,9 +10,9 @@ export default function CookiePolicy() {
           <ArrowLeft className="w-4 h-4" /> Back to Home
         </Link>
         <h1 className="text-4xl font-bold mb-8">Cookie Policy</h1>
-        
+
         <div className="prose prose-invert max-w-none text-gray-300 space-y-6">
-          <p><strong>Last Updated:</strong> [Date]</p>
+          <p><strong>Last Updated:</strong> 03-16-2026</p>
 
           <h2 className="text-2xl font-semibold text-white mt-8 mb-4">1. What Are Cookies</h2>
           <p>As is common practice with almost all professional websites, this site uses cookies, which are tiny files that are downloaded to your computer, to improve your experience. This page describes what information they gather, how we use it and why we sometimes need to store these cookies.</p>
@@ -65,12 +65,6 @@ export default function CookiePolicy() {
 
           <h2 className="text-2xl font-semibold text-white mt-8 mb-4">5. Disabling Cookies</h2>
           <p>You can prevent the setting of cookies by adjusting the settings on your browser (see your browser Help for how to do this). Be aware that disabling cookies will affect the functionality of this and many other websites that you visit. Disabling cookies will usually result in also disabling certain functionality and features of this site.</p>
-
-          <h2 className="text-2xl font-semibold text-white mt-8 mb-4">6. More Information</h2>
-          <p>If you are still looking for more information, you can contact us at:</p>
-          <ul className="list-disc pl-6 space-y-2">
-            <li>Email: [Email Address]</li>
-          </ul>
         </div>
       </div>
     </LandingLayout>
