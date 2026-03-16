@@ -2,7 +2,7 @@
 
 ## Reporting a Vulnerability
 
-Found a security issue? Email `5anik4h@gmail.com` with:
+Found a security issue? Email **support** **@finrush.app**with:
 
 - What you found
 - Steps to reproduce (if applicable)
