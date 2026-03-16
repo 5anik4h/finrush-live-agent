@@ -2,11 +2,8 @@
 # 1. DOCUMENTATION & CONFIGURATION FILES
 # ==========================================
 # All markdown files EXCEPT README.md are excluded (local development only)
-*.md
-!README.md              # Only this one is committed
 
 # Development-only directories
-docs/                   # Local documentation (not needed in prod)
 design/                 # Design assets (not needed in prod)
 .agents/                # Claude Code cache
 .claude/                # Claude Code configuration (except what's needed)
