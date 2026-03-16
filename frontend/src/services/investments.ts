@@ -261,20 +261,27 @@ export async function getNormalizedInvestmentValue(userId: string): Promise<numb
 }
 
 /**
- * Update current_price for a priceable investment row.
+ * Update current_price (and current_price_usd) for a priceable investment row.
+ * Pass rateAtEntry (from row.raw.rate_at_entry) so current_price_usd stays in sync.
  */
 export async function updateInvestmentPrice(
   assetType: string,
   id: string,
-  price: number
+  price: number,
+  rateAtEntry?: number
 ): Promise<void> {
   const supabase = getClient();
   const table = TABLE_MAP[assetType];
   if (!table) throw new Error(`Unknown asset type: ${assetType}`);
 
+  const patch: Record<string, number> = { current_price: Number(price.toFixed(4)) };
+  if (rateAtEntry != null && rateAtEntry > 0) {
+    patch.current_price_usd = Number((price * rateAtEntry).toFixed(4));
+  }
+
   const { error } = await supabase
     .from(table)
-    .update({ current_price: Number(price.toFixed(4)) })
+    .update(patch)
     .eq("id", id);
   if (error) throw new Error(`Failed to update price: ${error.message}`);
 
@@ -291,7 +298,7 @@ export async function updateGroupBInterest(
   assetType: string,
   id: string,
   accumulated_interest: number,
-  principal?: number
+  rateAtEntry?: number
 ): Promise<void> {
   const supabase = getClient();
   const table = TABLE_MAP[assetType];
@@ -301,7 +308,10 @@ export async function updateGroupBInterest(
     accumulated_interest: Number(accumulated_interest.toFixed(4)),
     last_calc_at: new Date().toISOString(),
   };
-  if (principal !== undefined) patch.principal = Number(principal.toFixed(4));
+  // Keep accumulated_interest_usd in sync using the frozen rate_at_entry from purchase time
+  if (rateAtEntry != null && rateAtEntry > 0) {
+    patch.accumulated_interest_usd = Number((accumulated_interest * rateAtEntry).toFixed(4));
+  }
 
   const { error } = await supabase.from(table).update(patch).eq("id", id);
   if (error) throw new Error(`Failed to update interest: ${error.message}`);

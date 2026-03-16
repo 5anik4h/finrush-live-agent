@@ -143,13 +143,13 @@ Audio response streamed back to you 🔊
 
 ## 📍 Development & Full History
 
-This is the **public release version** of Finrush. Full development history with full git trail (72 sessions, 200+ commits) documenting every architectural decision, iteration, and fix is available in the private repository. See [DEVLOG.md](.claude/memory/MEMORY.md) for session-by-session progress and detailed documentation.
+This is the **public release version** of Finrush. Full development history with full git trail (72 sessions, 200+ commits) documenting every architectural decision, iteration, and fix is available in the private repository. See [DEVLOG.md](DEVLOG.md) for session-by-session progress and detailed documentation.
 
 ---
 
 ## 🏗️ Technical Architecture
 
-📊 **[See the complete system architecture diagram](docs/diagrams/architecture.md)** with full-stack visualization, layer descriptions, and data flow examples.
+📊 **[See the complete system architecture diagram](docs/diagrams/architecture_mermaid.md)** with full-stack visualization, layer descriptions, and data flow examples.
 
 ### Frontend
 

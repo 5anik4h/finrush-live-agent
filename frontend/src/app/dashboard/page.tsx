@@ -81,10 +81,12 @@ function DashboardPageInner() {
     sendTextMessage,
     mediaStreamRef,
     error: wsError,
+    isConnected: isWsConnected,
     isRecording,
     isReadyToSend,
     isAgentSpeaking,
     refreshData,
+    connect: wsReconnect,
   } = useAudioStream(wsBaseUrl, token, lang, currency);
 
   const audioLevelRef = useAudioLevel(mediaStreamRef.current);
@@ -169,6 +171,9 @@ function DashboardPageInner() {
   const isAgentSpeakingRef = useRef<boolean>(isAgentSpeaking);
   useEffect(() => { isAgentSpeakingRef.current = isAgentSpeaking; }, [isAgentSpeaking]);
 
+  const isWsConnectedRef = useRef<boolean>(isWsConnected);
+  useEffect(() => { isWsConnectedRef.current = isWsConnected; }, [isWsConnected]);
+
   useEffect(() => {
     if (navigator.permissions?.query) {
       navigator.permissions.query({ name: "microphone" as PermissionName }).then(res => {
@@ -205,6 +210,37 @@ function DashboardPageInner() {
     setMessages(prev => [...prev, { id: ++msgIdCounter, role: "agent", text: `Connection error: ${wsError}`, type: "text", timestamp: new Date() }]);
     setAgentState("idle");
   }, [wsError]);
+
+  // WebSocket disconnect during active voice session — show connection_lost after 3s delay.
+  // The delay avoids false positives on language/currency changes (which briefly disconnect
+  // and reconnect in ~300ms). If the connection recovers within 3s the error never shows.
+  const disconnectTimerRef = useRef<NodeJS.Timeout | null>(null);
+  useEffect(() => {
+    if (!isWsConnected && voiceSessionActiveRef.current) {
+      // Start 3s countdown before showing error
+      disconnectTimerRef.current = setTimeout(() => {
+        // Re-check: still disconnected AND still in an active voice session
+        if (!isWsConnectedRef.current && voiceSessionActiveRef.current) {
+          setActiveError("connection_lost");
+          setAgentState("error");
+          if (timerRafRef.current) { cancelAnimationFrame(timerRafRef.current); timerRafRef.current = null; }
+          sessionStartRef.current = null;
+          setTimerProgress(1);
+        }
+      }, 3000);
+    } else if (isWsConnected && activeError === "connection_lost") {
+      // Reconnected — clear the error and resume recording state
+      setActiveError(null);
+      setAgentState(voiceSessionActiveRef.current ? "recording" : "idle");
+    }
+    return () => {
+      if (disconnectTimerRef.current) {
+        clearTimeout(disconnectTimerRef.current);
+        disconnectTimerRef.current = null;
+      }
+    };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isWsConnected]);
 
   // Thinking timeout — 15s no response
   useEffect(() => {
@@ -860,7 +896,7 @@ function DashboardPageInner() {
       <ErrorOverlay
         type={activeError}
         onClose={() => setActiveError(null)}
-        onRetry={activeError === "connection_lost" ? () => window.location.reload() : undefined}
+        onRetry={activeError === "connection_lost" ? () => { setActiveError(null); wsReconnect(); } : undefined}
       />
     </div>
   );

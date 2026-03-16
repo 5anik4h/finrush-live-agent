@@ -39,6 +39,19 @@ class AddInvestmentArgs(BaseModel):
     currency: str = "USD"
     date: Optional[str] = None
     extra: Optional[dict] = None
+    # Group B convenience fields — agent may pass these at top level instead of inside extra
+    apy: Optional[float] = Field(None, ge=0)
+    frequency: Optional[str] = None
+    reinvest: Optional[bool] = None
+    end_date: Optional[str] = None
+    # Fund convenience fields — agent may pass these at top level instead of inside extra
+    current_value: Optional[float] = Field(None, ge=0)
+    ter: Optional[float] = Field(None, ge=0)
+    # Realestate convenience fields — agent may pass these at top level instead of inside extra
+    estimated_value: Optional[float] = Field(None, gt=0)
+    pending_mortgage: Optional[float] = Field(None, ge=0)
+    purchase_price: Optional[float] = Field(None, gt=0)
+    monthly_rent: Optional[float] = Field(None, ge=0)
 
     @field_validator("date", mode="before")
     @classmethod

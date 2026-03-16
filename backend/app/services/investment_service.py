@@ -247,7 +247,9 @@ async def add_investment(supabase, user_id: str, args: AddInvestmentArgs, langua
             qty = total / bp_raw
         if bp_raw <= 0 and not total:
             return {"error": "Please provide buy_price or total_amount for the fund."}
-        cv_raw = extra.get("current_value", qty * bp_raw)
+        # current_value/ter: accept from extra OR from top-level args fields
+        cv_raw = extra.get("current_value") or args.current_value or (qty * bp_raw)
+        ter_val = extra.get("ter", extra.get("management_fee")) or args.ter
         bp_orig, bp_usd, rate = _rc(bp_raw, currency, user_currency, supabase)
         cv_orig, cv_usd, _ = _rc(cv_raw, currency, user_currency, supabase)
         invested = qty * bp_usd
@@ -259,7 +261,7 @@ async def add_investment(supabase, user_id: str, args: AddInvestmentArgs, langua
             "buy_price_usd": bp_usd,
             "current_value": cv_orig,
             "current_value_usd": cv_usd,
-            "ter": extra.get("ter", extra.get("management_fee")),
+            "ter": ter_val,
             "currency": currency,
             "rate_at_entry": rate,
             "date": date_str,
@@ -270,9 +272,13 @@ async def add_investment(supabase, user_id: str, args: AddInvestmentArgs, langua
         qty = args.total_amount or (args.quantity or 0) * (args.buy_price or 1)
         if qty <= 0:
             return {"error": "Please provide the principal amount (total_amount or quantity) for this investment."}
-        apy = extra.get("apy", extra.get("interest_rate", 0))
+        # apy/frequency/reinvest/end_date: accept from extra OR from top-level args fields
+        apy = extra.get("apy", extra.get("interest_rate")) or args.apy or 0
         if apy <= 0:
             return {"error": "Please provide a valid APY (annual percentage yield > 0)."}
+        frequency = extra.get("frequency") or args.frequency or "monthly"
+        reinvest = extra.get("reinvest") if extra.get("reinvest") is not None else (args.reinvest or False)
+        end_date = extra.get("end_date") or args.end_date
         q_orig, q_usd, rate = _rc(qty, currency, user_currency, supabase)
         invested = q_usd
         data = {
@@ -283,21 +289,22 @@ async def add_investment(supabase, user_id: str, args: AddInvestmentArgs, langua
             "quantity_usd": q_usd,
             "rate_at_entry": rate,
             "apy": apy,
-            "frequency": extra.get("frequency", "monthly"),
+            "frequency": frequency,
             "accumulated_interest": 0,
             "accumulated_interest_usd": 0.0,
-            "reinvest": extra.get("reinvest", False),
+            "reinvest": reinvest,
             "start_date": date_str,
-            "end_date": extra.get("end_date"),
+            "end_date": end_date,
         }
 
     elif args.asset_type == "realestate":
-        est_value = extra.get("estimated_value", args.total_amount or 0)
+        # estimated_value/purchase_price/pending_mortgage/monthly_rent: accept from extra OR top-level args
+        est_value = extra.get("estimated_value") or args.estimated_value or args.total_amount or 0
         if est_value <= 0:
             return {"error": "Please provide estimated_value for real estate."}
-        pm_raw = extra.get("pending_mortgage", 0)
-        pp_raw = extra.get("purchase_price", est_value)
-        mr_raw = extra.get("monthly_rent", 0)
+        pm_raw = extra.get("pending_mortgage") if extra.get("pending_mortgage") is not None else (args.pending_mortgage or 0)
+        pp_raw = extra.get("purchase_price") or args.purchase_price or est_value
+        mr_raw = extra.get("monthly_rent") if extra.get("monthly_rent") is not None else (args.monthly_rent or 0)
         ev_orig, ev_usd, rate = _rc(est_value, currency, user_currency, supabase)
         pm_orig, pm_usd, _ = _rc(pm_raw, currency, user_currency, supabase)
         pp_orig, pp_usd, _ = _rc(pp_raw, currency, user_currency, supabase)

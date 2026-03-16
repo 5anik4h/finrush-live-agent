@@ -17,8 +17,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ASSET_TYPE_ICON_META } from "@/lib/categoryIcons";
-import { getAssetTypeLabel, AssetType } from "@/lib/categories";
+import { getAssetTypeLabel, AssetType, GROUP_B_ASSET_TYPES } from "@/lib/categories";
 import { useLang } from "@/contexts/LangContext";
+import { format } from "date-fns";
 import { type InvRow } from "./InvestmentTable";
 
 /* ═══════════════════════════════════════════════
@@ -380,7 +381,21 @@ export default function InvestmentForm({
           disabled={disabled}
           onChange={(e) => {
             const val = f.uppercase ? e.target.value.toUpperCase() : e.target.value;
-            onFormDataChange({ ...formData, [f.key]: val });
+            const updated = { ...formData, [f.key]: val };
+
+            // AUTO-UPDATE end_date when start_date changes for Group B
+            if (f.key === "start_date" && GROUP_B_ASSET_TYPES.includes(dialogType as AssetType)) {
+              if (val) {
+                const start = new Date(val);
+                if (!isNaN(start.getTime())) {
+                  const end = new Date(start);
+                  end.setFullYear(start.getFullYear() + 1);
+                  updated.end_date = format(end, "yyyy-MM-dd");
+                }
+              }
+            }
+
+            onFormDataChange(updated);
           }}
           className="h-9 bg-card/50 backdrop-blur-md border-border text-[#F0F5F1] text-[13px] focus-visible:ring-1 focus-visible:ring-[#C8FF00] disabled:opacity-40 disabled:cursor-not-allowed"
         />

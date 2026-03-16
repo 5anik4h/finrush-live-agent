@@ -236,7 +236,8 @@ export default function InversionTab({ session, refreshKey }: InversionTabProps)
             startDate
           );
           const current = Math.max(Number(r.raw.accumulated_interest ?? 0), accrued);
-          await updateGroupBInterest(r.asset_type, r.id, current);
+          const rateAtEntry = r.raw.rate_at_entry != null ? Number(r.raw.rate_at_entry) : undefined;
+          await updateGroupBInterest(r.asset_type, r.id, current, rateAtEntry);
         } catch {
           // Non-critical: silently skip if update fails
         }
@@ -410,11 +411,12 @@ export default function InversionTab({ session, refreshKey }: InversionTabProps)
       updatable.map(async (r) => {
         const ticker = String(r.raw.ticker);
         const price = await fetchPrice(ticker, r.asset_type);
+        const rateAtEntry = r.raw.rate_at_entry != null ? Number(r.raw.rate_at_entry) : undefined;
         if (price !== null) {
-          await updateInvestmentPrice(r.asset_type, r.id, price);
+          await updateInvestmentPrice(r.asset_type, r.id, price, rateAtEntry);
         } else if (r.raw.current_price == null || Number(r.raw.current_price) === 0) {
           const fallbackPrice = Number(r.raw.buy_price ?? 0);
-          if (fallbackPrice > 0) await updateInvestmentPrice(r.asset_type, r.id, fallbackPrice);
+          if (fallbackPrice > 0) await updateInvestmentPrice(r.asset_type, r.id, fallbackPrice, rateAtEntry);
         }
         return { id: r.id, price };
       })
@@ -441,15 +443,29 @@ export default function InversionTab({ session, refreshKey }: InversionTabProps)
     setEditRow(null);
     setDialogType(type);
     const defaults: Record<string, string | boolean> = {};
+    const now = new Date();
+    const nowStr = format(now, "yyyy-MM-dd");
+    const isGroupB = GROUP_B_ASSET_TYPES.includes(type as typeof GROUP_B_ASSET_TYPES[number]);
+
     for (const f of getFormFields(type)) {
-      if (f.type === "toggle") defaults[f.key] = false;
-      else if (f.type === "date") defaults[f.key] = format(new Date(), "yyyy-MM-dd");
-      else defaults[f.key] = "";
+      if (f.type === "toggle") {
+        defaults[f.key] = false;
+      } else if (f.type === "date") {
+        if (f.key === "end_date" && isGroupB) {
+          const nextYear = new Date(now);
+          nextYear.setFullYear(now.getFullYear() + 1);
+          defaults[f.key] = format(nextYear, "yyyy-MM-dd");
+        } else {
+          defaults[f.key] = nowStr;
+        }
+      } else {
+        defaults[f.key] = "";
+      }
     }
     // Add currency field defaulting to user's selected currency
     defaults.currency = globalCurrency;
     // Group B: default frequency to "monthly"
-    if (GROUP_B_ASSET_TYPES.includes(type as typeof GROUP_B_ASSET_TYPES[number])) {
+    if (isGroupB) {
       defaults.frequency = "monthly";
     }
     setFormData(defaults);
@@ -468,6 +484,17 @@ export default function InversionTab({ session, refreshKey }: InversionTabProps)
     }
     // Populate currency from raw row (fall back to globalCurrency)
     data.currency = row.raw.currency != null ? String(row.raw.currency) : globalCurrency;
+
+    // Default end_date to 1 year after start_date if missing (Group B)
+    if (GROUP_B_ASSET_TYPES.includes(row.asset_type as AssetType) && !data.end_date && data.start_date) {
+      const start = new Date(String(data.start_date));
+      if (!isNaN(start.getTime())) {
+        const end = new Date(start);
+        end.setFullYear(start.getFullYear() + 1);
+        data.end_date = format(end, "yyyy-MM-dd");
+      }
+    }
+
     setFormData(data);
     setDialogOpen(true);
   };
@@ -578,8 +605,13 @@ export default function InversionTab({ session, refreshKey }: InversionTabProps)
       }
       // Dual-storage for non-Group-A types: compute *_usd and rate_at_entry
       if (!PRICE_FETCH_TYPES.includes(dialogType)) {
-        const { rateAtEntry } = resolveToUsd(1, entryCurrency, fxRates);
-        payload.rate_at_entry = rateAtEntry;
+        // Only update rate_at_entry if: (a) creating new, or (b) user explicitly changed currency
+        const originalCurrency = editRow ? String(editRow.raw.currency ?? "USD") : null;
+        const currencyChanged = !editRow || entryCurrency !== originalCurrency;
+        if (currencyChanged) {
+          const { rateAtEntry } = resolveToUsd(1, entryCurrency, fxRates);
+          payload.rate_at_entry = rateAtEntry;
+        }
         // Group B: quantity → quantity_usd; accumulated_interest → accumulated_interest_usd
         if (["fixedincome", "account", "crowdlending"].includes(dialogType)) {
           if (payload.quantity != null) payload.quantity_usd = resolveToUsd(Number(payload.quantity), entryCurrency, fxRates).amountUsd;
