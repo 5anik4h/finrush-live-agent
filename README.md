@@ -141,6 +141,14 @@ Audio response streamed back to you 🔊
 
 ---
 
+## 📍 Development & Full History
+
+This is the **public release version** of Finrush. Full development history (72 sessions, 200+ commits, architectural decisions) is available in the private [`cloud_agent`](https://github.com/5anik4h/cloud_agent) repository. Judges can request access to see the complete development journey and decision trail.
+
+**Why separate repos?** Professional practice — production-clean code in public, full iteration history in private.
+
+---
+
 ## 🏗️ Technical Architecture
 
 ### Frontend
