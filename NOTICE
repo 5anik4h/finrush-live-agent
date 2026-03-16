@@ -1,0 +1,114 @@
+Finrush - AI Financial Assistant
+Copyright 2026 5anik4h
+
+Licensed under the Apache License, Version 2.0
+See LICENSE file for full terms at http://www.apache.org/licenses/LICENSE-2.0
+
+================================================================================
+THIRD-PARTY DEPENDENCIES & ATTRIBUTIONS
+================================================================================
+
+INFRASTRUCTURE & CLOUD SERVICES:
+- Google Cloud Run (Google Cloud Platform)
+  License: Proprietary / Subject to Google Cloud Terms of Service
+
+- Supabase (PostgreSQL + Auth)
+  License: Apache 2.0
+  Copyright: Supabase
+  https://github.com/supabase/supabase
+
+FRONTEND:
+- Next.js 16 (React 19)
+  License: MIT
+  Copyright: Vercel Inc.
+  https://github.com/vercel/next.js
+
+- React 19
+  License: MIT
+  Copyright: Meta Platforms, Inc.
+  https://github.com/facebook/react
+
+- Tailwind CSS v4
+  License: MIT
+  Copyright: Tailwind Labs Inc.
+  https://github.com/tailwindlabs/tailwindcss
+
+- shadcn/ui
+  License: MIT
+  Copyright: shadcn
+  https://github.com/shadcn-ui/ui
+
+- TypeScript
+  License: Apache 2.0
+  Copyright: Microsoft Corporation
+  https://github.com/microsoft/TypeScript
+
+BACKEND:
+- FastAPI
+  License: MIT
+  Copyright: Sebastián Ramírez
+  https://github.com/tiangolo/fastapi
+
+- Python 3.12
+  License: PSF (Python Software Foundation License)
+  Copyright: Python Software Foundation
+  https://www.python.org/
+
+- pydantic
+  License: MIT
+  Copyright: Samuel Colvin, Pydantic core contributors
+  https://github.com/pydantic/pydantic
+
+- google-cloud-storage
+  License: Apache 2.0
+  Copyright: Google Cloud
+  https://github.com/googleapis/python-storage
+
+- python-jose
+  License: MIT
+  Copyright: Michael Davis
+  https://github.com/mpdavis/python-jose
+
+AI & LANGUAGE MODELS:
+- Google Gemini Live API
+  License: Proprietary / Subject to Google AI Terms
+  https://ai.google.dev/
+
+MONITORING & ERROR TRACKING:
+- Sentry
+  License: Functional Source License (FSL 1.1) + proprietary
+  https://github.com/getsentry/sentry
+
+DEVELOPMENT TOOLS:
+- ruff (Python linter)
+  License: MIT
+  Copyright: Astral Software Inc.
+  https://github.com/astral-sh/ruff
+
+- ESLint
+  License: MIT
+  Copyright: OpenJS Foundation
+  https://github.com/eslint/eslint
+
+================================================================================
+DISCLAIMER
+================================================================================
+
+This software is provided "AS IS" without warranty of any kind. See LICENSE file
+for complete disclaimer. Users are solely responsible for understanding and
+accepting the risks associated with financial data management.
+
+================================================================================
+SECURITY & PRIVACY
+================================================================================
+
+For security vulnerability reports, see SECURITY.md
+For privacy and data handling practices, see README.md
+
+================================================================================
+CONTRIBUTION POLICY
+================================================================================
+
+Contributions are welcome under the terms of the Apache 2.0 license.
+All contributions automatically fall under the same license terms unless
+otherwise agreed to in writing with the copyright holder.

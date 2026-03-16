@@ -88,26 +88,31 @@ Finrush is the voice-first, AI-powered personal finance assistant. Just speak na
 Once logged in, click the microphone and try these:
 
 **Adding transactions**
+
 > *"I just paid €120 for electricity"*
 > *"Received my salary, €2,400"*
 > *"Spent $18 on lunch"*
 
 **Querying your data**
+
 > *"What's my balance this month?"*
 > *"How much have I spent on food?"*
 > *"Show me my net worth"*
 
 **Budgets and savings**
+
 > *"Create a budget of €300 for restaurants"*
 > *"Open a savings pot called Vacation with a €1,500 goal"*
 > *"Add €200 to my Vacation pot"*
 
 **Investments**
+
 > *"I bought 10 Apple shares at $185"*
 > *"Add €5,000 to my crowdlending portfolio at 8% APY"*
 > *"What's my total portfolio value?"*
 
 **Images**
+
 > Take a photo of a receipt or invoice and send it — the agent reads it and creates the transaction automatically.
 
 Switch language (EN/ES) with the globe icon in the top bar. Switch currency (USD/EUR/GBP) with the button in the bottom bar.
@@ -188,6 +193,6 @@ This project is licensed under the **Apache License 2.0** — see the [LICENSE](
 
 ---
 
-**Made with ❤️ for the Gemini Live Agent Challenge**
+**Made with ❤️ for the #GeminiLiveAgentChallenge**
 
 [Visit Finrush →](https://finrush.app)
