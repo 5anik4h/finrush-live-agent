@@ -143,13 +143,13 @@ Audio response streamed back to you 🔊
 
 ## 📍 Development & Full History
 
-This is the **public release version** of Finrush. Full development history (72 sessions, 200+ commits, architectural decisions) is available in the private [`cloud_agent`](https://github.com/5anik4h/cloud_agent) repository. Judges can request access to see the complete development journey and decision trail.
-
-**Why separate repos?** Professional practice — production-clean code in public, full iteration history in private.
+This is the **public release version** of Finrush. Full development history with full git trail (72 sessions, 200+ commits) documenting every architectural decision, iteration, and fix is available in the private repository. See [DEVLOG.md](.claude/memory/MEMORY.md) for session-by-session progress and detailed documentation.
 
 ---
 
 ## 🏗️ Technical Architecture
+
+📊 **[See the complete system architecture diagram](docs/diagrams/architecture.md)** with full-stack visualization, layer descriptions, and data flow examples.
 
 ### Frontend
 
@@ -201,4 +201,6 @@ This project is licensed under the **Apache License 2.0** — see the [LICENSE](
 
 ---
 
-**Made with ❤️ for the #GeminiLiveAgentChallenge**[Visit Finrush →](https://finrush.app)
+**Made with ❤️ for the #GeminiLiveAgentChallenge**
+
+[Visit Finrush →](https://finrush.app)
